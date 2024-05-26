@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">IEQ Project</string>
+    <string name="home_type_prompt">Select Home Type</string>
+    <string-array name="home_type_options">
+        <item></item> <!-- Blank option -->
+        <item>Apartment, less than 5 units</item>
+        <item>Apartment, more than 5 units</item>
+        <item>Single Family House</item>
+    </string-array>
 </resources>
