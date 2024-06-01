@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "352421745700",
+    "project_id": "ieq-project",
+    "storage_bucket": "ieq-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352421745700:android:fcf2b3a734204b667bf4b1",
+        "android_client_info": {
+          "package_name": "com.example.ieqproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgA0wEUD8Exd8Ld0zqDUV_-lVtO5Gppw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
