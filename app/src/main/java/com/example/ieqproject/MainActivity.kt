@@ -8,12 +8,20 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ieqproject.DwellingAttributes
 import com.example.ieqproject.R
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance().reference
 
         // Initialize the spinner
         val homeTypeSpinner: Spinner = findViewById(R.id.homeTypeSpinner)
@@ -24,6 +32,22 @@ class MainActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             homeTypeSpinner.adapter = adapter
+        }
+
+        val submitButton: Button = findViewById(R.id.submitButton)
+
+        // Set up the submit button click listener
+        submitButton.setOnClickListener {
+            val homeType = homeTypeSpinner.selectedItem.toString()
+
+            // Save the data in the Realtime Database
+            database.child("dwellingAttributes").push().setValue(homeType)
+                .addOnSuccessListener {
+                    // Handle success
+                }
+                .addOnFailureListener {
+                    // Handle failure
+                }
         }
     }
 }
