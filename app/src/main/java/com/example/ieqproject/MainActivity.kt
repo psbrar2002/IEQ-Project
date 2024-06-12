@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
 
-        // Initialize the spinner
+        // Initialize the home type spinner
         val homeTypeSpinner: Spinner = findViewById(R.id.homeTypeSpinner)
         ArrayAdapter.createFromResource(
             this,
@@ -34,14 +34,31 @@ class MainActivity : AppCompatActivity() {
             homeTypeSpinner.adapter = adapter
         }
 
+        // Initialize the section 8 spinner
+        val section8Spinner: Spinner = findViewById(R.id.section8Spinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.yes_no_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            section8Spinner.adapter = adapter
+        }
+
         val submitButton: Button = findViewById(R.id.submitButton)
 
         // Set up the submit button click listener
         submitButton.setOnClickListener {
             val homeType = homeTypeSpinner.selectedItem.toString()
+            val section8 = section8Spinner.selectedItem.toString()
 
             // Save the data in the Realtime Database
-            database.child("dwellingAttributes").push().setValue(homeType)
+            val data = mapOf(
+                "homeType" to homeType,
+                "section8" to section8
+            )
+
+            database.child("dwellingAttributes").push().setValue(data)
                 .addOnSuccessListener {
                     // Handle success
                 }
