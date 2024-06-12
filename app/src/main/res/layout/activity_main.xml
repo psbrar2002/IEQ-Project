@@ -64,6 +64,32 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Add other sections similarly -->
+    <!-- Section 8 Subsidized Section -->
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is your home Section 8 Subsidized?"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/section8Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/section8_prompt" />
+    </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/submitButton"
