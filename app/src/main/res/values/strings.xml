@@ -7,4 +7,10 @@
         <item>Apartment, more than 5 units</item>
         <item>Single Family House</item>
     </string-array>
+    <string name="section8_prompt">Is your home Section 8 Subsidized?</string>
+    <string-array name="yes_no_options">
+        <item></item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
 </resources>
