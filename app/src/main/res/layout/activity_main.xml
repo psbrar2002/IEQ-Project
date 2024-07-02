@@ -90,7 +90,11 @@
             android:prompt="@string/section8_prompt" />
     </LinearLayout>
         </androidx.cardview.widget.CardView>
-
+        <TextView
+            android:id="@+id/dataSizeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Size: 0 GB" />
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
