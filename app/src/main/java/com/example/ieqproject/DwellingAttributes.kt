@@ -4,6 +4,9 @@ data class DwellingAttributes(
     val homeType: String,
     val isSection8: Boolean,
     val isOaklandHousing: Boolean,
-    val numPeople: Int,
-    // Add other fields as needed
+    val numPeople: String,
+    val squareFootage: String,
+    val date: String,
+    val streetIntersection: String,
+    val buildingAge: String?
 )
