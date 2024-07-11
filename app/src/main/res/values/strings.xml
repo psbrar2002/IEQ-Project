@@ -13,4 +13,40 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+    <!-- Oakland Housing Authority -->
+    <string name="oakland_housing_prompt">Is your home managed by the Oakland Housing Authority?</string>
+
+    <!-- Number of People -->
+    <string name="number_of_people_prompt">Select number of people</string>
+    <string-array name="number_of_people_options">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>10+</item>
+    </string-array>
+
+    <!-- Square Footage -->
+    <string name="square_footage_prompt">Select square footage</string>
+    <string-array name="square_footage_options">
+        <item>Less than 500 square feet (10x15ft)</item>
+        <item>500-1000 sq ft (10ft x10ft)</item>
+        <item>1000-2000 sq ft (35 x 35 ft)</item>
+        <item>More than 2000 sq ft (45x45 ft)</item>
+    </string-array>
+
+    <!-- Date -->
+    <string name="date_prompt">Enter date (mm/dd/yyyy)</string>
+
+    <!-- Nearby Street Intersection -->
+    <string name="street_intersection_prompt">Enter nearby street intersection</string>
+
+    <!-- Age of Building -->
+    <string name="building_age_prompt">Enter age of building if you dont know leave blank</string>
 </resources>
