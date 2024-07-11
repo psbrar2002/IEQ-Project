@@ -63,38 +63,216 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Add other sections similarly -->
-    <!-- Section 8 Subsidized Section -->
-
+        <!-- Section 8 Subsidized Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Is your home Section 8 Subsidized?"
-            android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/section8Spinner"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is your home Section 8 Subsidized?"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/section8Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/section8_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Oakland Housing Authority Section -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/section8_prompt" />
-    </LinearLayout>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is your home managed by the Oakland Housing Authority?"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/oaklandHousingSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/oakland_housing_prompt" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <TextView
-            android:id="@+id/dataSizeTextView"
-            android:layout_width="wrap_content"
+
+        <!-- Number of People Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data Size: 0 GB" />
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number of People in Living Unit"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/numberOfPeopleSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/number_of_people_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Square Footage Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Square Footage Estimate"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/squareFootageSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/square_footage_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Date Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date (mm/dd/yyyy)"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/dateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/date_prompt"
+                    android:inputType="date" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Nearby Street Intersection Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nearby Street Intersection"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/streetIntersectionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/street_intersection_prompt"
+                    android:inputType="text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Age of Building Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age of Building"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/buildingAgeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/building_age_prompt"
+                    android:inputType="number" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+<!--        <TextView-->
+<!--            android:id="@+id/dataSizeTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Data Size: 0 Bytes" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/exportButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Export Data" />-->
+        <!-- Submit Button -->
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
