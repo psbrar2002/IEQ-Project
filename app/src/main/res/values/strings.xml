@@ -19,6 +19,7 @@
     <!-- Number of People -->
     <string name="number_of_people_prompt">Select number of people</string>
     <string-array name="number_of_people_options">
+        <item></item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -35,6 +36,7 @@
     <!-- Square Footage -->
     <string name="square_footage_prompt">Select square footage</string>
     <string-array name="square_footage_options">
+        <item></item>
         <item>Less than 500 square feet (10x15ft)</item>
         <item>500-1000 sq ft (10ft x10ft)</item>
         <item>1000-2000 sq ft (35 x 35 ft)</item>
