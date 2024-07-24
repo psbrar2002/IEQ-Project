@@ -1,225 +1,87 @@
 package com.example.ieqproject
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import com.google.firebase.database.*
-import java.io.File
-import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var database: DatabaseReference
-    private lateinit var dataSizeTextView: TextView
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance().reference
+        sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
 
-        // Initialize the home type spinner
-        val homeTypeSpinner: Spinner = findViewById(R.id.homeTypeSpinner)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.home_type_options,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            homeTypeSpinner.adapter = adapter
-        }
-
-        // Initialize the section 8 spinner
-        val section8Spinner: Spinner = findViewById(R.id.section8Spinner)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.yes_no_options,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            section8Spinner.adapter = adapter
-        }
-
-        // Initialize the Oakland Housing Authority spinner
-        val oaklandHousingSpinner: Spinner = findViewById(R.id.oaklandHousingSpinner)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.yes_no_options,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            oaklandHousingSpinner.adapter = adapter
-        }
-
-        // Initialize the number of people spinner
-        val numberOfPeopleSpinner: Spinner = findViewById(R.id.numberOfPeopleSpinner)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.number_of_people_options,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            numberOfPeopleSpinner.adapter = adapter
-        }
-
-        // Initialize the square footage spinner
-        val squareFootageSpinner: Spinner = findViewById(R.id.squareFootageSpinner)
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.square_footage_options,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            squareFootageSpinner.adapter = adapter
-        }
+        // Initialize UI components for Dwelling Attributes
+        DwellingAttributes.setupSpinners(this, findViewById(android.R.id.content))
 
         // Initialize the EditTexts
         val dateEditText: EditText = findViewById(R.id.dateEditText)
         val streetIntersectionEditText: EditText = findViewById(R.id.streetIntersectionEditText)
         val buildingAgeEditText: EditText = findViewById(R.id.buildingAgeEditText)
 
+        // Initialize the navigation button to HVACActivity
+        val hvacButton: Button = findViewById(R.id.hvacButton)
+        hvacButton.setOnClickListener {
+            saveDataLocally()
+            val intent = Intent(this, HVACActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Unified submit button (if exists)
         val submitButton: Button = findViewById(R.id.submitButton)
-
-        // Set up the submit button click listener
         submitButton.setOnClickListener {
-            val homeType = homeTypeSpinner.selectedItem.toString()
-            val section8 = section8Spinner.selectedItem.toString() == "Yes"
-            val oaklandHousing = oaklandHousingSpinner.selectedItem.toString() == "Yes"
-            val numPeople = numberOfPeopleSpinner.selectedItem.toString()
-            val squareFootage = squareFootageSpinner.selectedItem.toString()
-            val date = dateEditText.text.toString()
-            val streetIntersection = streetIntersectionEditText.text.toString()
-            val buildingAge = buildingAgeEditText.text.toString()
-
-            // Save the data in the Realtime Database
-            val data = DwellingAttributes(
-                homeType,
-                section8,
-                oaklandHousing,
-                numPeople,
-                squareFootage,
-                date,
-                streetIntersection,
-                if (buildingAge.isBlank()) null else buildingAge
-            )
-
-            database.child("dwellingAttributes").push().setValue(data)
-                .addOnSuccessListener {
-                    // Handle success
-                }
-                .addOnFailureListener {
-                    // Handle failure
-                }
+            saveDataLocally()
+            submitDataToFirebase()
         }
 
-        // Initialize the data size text view
-//        dataSizeTextView = findViewById(R.id.dataSizeTextView)
-
-        // Listen for changes in the data size
-//        database.child("dwellingAttributes").addValueEventListener(dataSizeListener)
-//
-//        // Set up a button to export data
-//        val exportButton: Button = findViewById(R.id.exportButton)
-//        exportButton.setOnClickListener {
-//            retrieveData()
-        }
+        restoreData()
     }
 
-//    // Listener for onDataChange
-//    private val dataSizeListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            val jsonString = dataSnapshot.value.toString()
-//            val dataSizeInBytes = jsonString.toByteArray(StandardCharsets.UTF_8).size
-//            val dataSizeText = formatSize(dataSizeInBytes)
-//
-//            // Update UI on the main thread
-//            runOnUiThread {
-//                dataSizeTextView.text = "Data Size: $dataSizeText"
-//            }
-//        }
-//
-//        override fun onCancelled(databaseError: DatabaseError) {
-//            // Handle error
-//        }
-//    }
-//
-//    private fun formatSize(sizeInBytes: Int): String {
-//        val kilobytes = sizeInBytes / 1024.0
-//        val megabytes = kilobytes / 1024.0
-//        val gigabytes = megabytes / 1024.0
-//
-//        return when {
-//            gigabytes >= 1 -> String.format("%.2f GB", gigabytes)
-//            megabytes >= 1 -> String.format("%.2f MB", megabytes)
-//            kilobytes >= 1 -> String.format("%.2f KB", kilobytes)
-//            else -> String.format("%d Bytes", sizeInBytes)
-//        }
-//    }
-//
-//    private fun retrieveData() {
-//        database.child("dwellingAttributes").addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                // Handle data snapshot
-//                val data = dataSnapshot.value
-//                // Call methods to export the data
-//                exportDataAsCsv(data)
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Handle error
-//            }
-//        })
-//    }
-//
-//    private fun exportDataAsCsv(data: Any?) {
-//        val csvBuilder = StringBuilder()
-//
-//        // Add CSV header
-//        csvBuilder.append("key,homeType,section8,oaklandHousing,numPeople,squareFootage,date,streetIntersection,buildingAge\n")
-//
-//        if (data is Map<*, *>) {
-//            for ((key, value) in data) {
-//                if (value is Map<*, *>) {
-//                    val homeType = value["homeType"] ?: ""
-//                    val section8 = value["section8"] ?: ""
-//                    val oaklandHousing = value["oaklandHousing"] ?: ""
-//                    val numPeople = value["numPeople"] ?: ""
-//                    val squareFootage = value["squareFootage"] ?: ""
-//                    val date = value["date"] ?: ""
-//                    val streetIntersection = value["streetIntersection"] ?: ""
-//                    val buildingAge = value["buildingAge"] ?: ""
-//                    csvBuilder.append("$key,$homeType,$section8,$oaklandHousing,$numPeople,$squareFootage,$date,$streetIntersection,$buildingAge\n")
-//                }
-//            }
-//        }
-//
-//        val file = saveToFile("data.csv", csvBuilder.toString())
-//        sendEmailWithAttachment(file)
-//    }
-//
-//    private fun saveToFile(fileName: String, content: String): File {
-//        val file = File(getExternalFilesDir(null), fileName)
-//        file.writeText(content)
-//        return file
-//    }
-//
-//    private fun sendEmailWithAttachment(file: File) {
-//        val uri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", file)
-//        val intent = Intent(Intent.ACTION_SEND).apply {
-//            type = "text/csv"
-//            putExtra(Intent.EXTRA_EMAIL, arrayOf("your_email@example.com")) // Replace with your email
-//            putExtra(Intent.EXTRA_SUBJECT, "Firebase Data Export")
-//            putExtra(Intent.EXTRA_TEXT, "Please find the attached CSV file with the exported data.")
-//            putExtra(Intent.EXTRA_STREAM, uri)
-//            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//        }
-//        startActivity(Intent.createChooser(intent, "Send Email"))
-//    }
-//}
+    private fun saveDataLocally() {
+        val editor = sharedPreferences.edit()
+        editor.putString("homeType", findViewById<Spinner>(R.id.homeTypeSpinner).selectedItem.toString())
+        editor.putBoolean("section8", findViewById<Spinner>(R.id.section8Spinner).selectedItem.toString() == "Yes")
+        editor.putBoolean("oaklandHousing", findViewById<Spinner>(R.id.oaklandHousingSpinner).selectedItem.toString() == "Yes")
+        editor.putString("numPeople", findViewById<Spinner>(R.id.numberOfPeopleSpinner).selectedItem.toString())
+        editor.putString("squareFootage", findViewById<Spinner>(R.id.squareFootageSpinner).selectedItem.toString())
+        editor.putString("date", findViewById<EditText>(R.id.dateEditText).text.toString())
+        editor.putString("streetIntersection", findViewById<EditText>(R.id.streetIntersectionEditText).text.toString())
+        editor.putString("buildingAge", findViewById<EditText>(R.id.buildingAgeEditText).text.toString())
+        editor.apply()
+    }
+
+    private fun restoreData() {
+        findViewById<Spinner>(R.id.homeTypeSpinner).setSelection(getSpinnerIndex(R.id.homeTypeSpinner, sharedPreferences.getString("homeType", "")!!))
+        findViewById<Spinner>(R.id.section8Spinner).setSelection(if (sharedPreferences.getBoolean("section8", false)) 1 else 2)
+        findViewById<Spinner>(R.id.oaklandHousingSpinner).setSelection(if (sharedPreferences.getBoolean("oaklandHousing", false)) 1 else 2)
+        findViewById<Spinner>(R.id.numberOfPeopleSpinner).setSelection(getSpinnerIndex(R.id.numberOfPeopleSpinner, sharedPreferences.getString("numPeople", "")!!))
+        findViewById<Spinner>(R.id.squareFootageSpinner).setSelection(getSpinnerIndex(R.id.squareFootageSpinner, sharedPreferences.getString("squareFootage", "")!!))
+        findViewById<EditText>(R.id.dateEditText).setText(sharedPreferences.getString("date", ""))
+        findViewById<EditText>(R.id.streetIntersectionEditText).setText(sharedPreferences.getString("streetIntersection", ""))
+        findViewById<EditText>(R.id.buildingAgeEditText).setText(sharedPreferences.getString("buildingAge", ""))
+    }
+
+    private fun getSpinnerIndex(spinnerId: Int, value: String): Int {
+        val spinner: Spinner = findViewById(spinnerId)
+        for (i in 0 until spinner.count) {
+            if (spinner.getItemAtPosition(i).toString() == value) {
+                return i
+            }
+        }
+        return 0
+    }
+
+    private fun submitDataToFirebase() {
+        // Example usage of the FirebaseUtils class to submit data
+        saveDataLocally()
+        FirebaseUtils.submitDataToFirebase(this, sharedPreferences)
+    }
+}

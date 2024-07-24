@@ -261,17 +261,22 @@
                     android:inputType="number" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-<!--        <TextView-->
-<!--            android:id="@+id/dataSizeTextView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Data Size: 0 Bytes" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/dataSizeTextView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Data Size: 0 Bytes" />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/exportButton"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Export Data" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/exportButton"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Export Data" />-->
+        <Button
+            android:id="@+id/hvacButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next" />
         <!-- Submit Button -->
         <Button
             android:id="@+id/submitButton"
