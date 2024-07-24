@@ -51,4 +51,49 @@
 
     <!-- Age of Building -->
     <string name="building_age_prompt">Enter age of building if you dont know leave blank</string>
+
+    <!-- New strings for HVAC -->
+    <string name="yes_no_prompt">Select Yes or No</string>
+    <string-array name="air_conditioning_type_options">
+        <item></item>
+        <item>Central (blows out vents in wall or ceiling)</item>
+        <item>Mini-Split</item>
+    </string-array>
+    <string-array name="heating_type_options">
+        <item></item>
+        <item>No heat</item>
+        <item>Gravity Heater on wall, baseboard, or in the floor. Gets hot but does not blow air</item>
+        <item>Central Heat with filter warm air blows out vents in wall or ceiling and has a filter to clean the air</item>
+        <item>Central heat WITHOUT Filter Warm air blows out vents in wall or ceiling and does not have a filter to clean the air</item>
+        <item>Radiator Steam through pipes</item>
+    </string-array>
+    <string name="air_conditioning_type_prompt">Select Air Conditioning Type</string>
+    <string name="heating_type_prompt">Select Heating Type</string>
+    <string name="appliances_prompt">Enter appliances</string>
+
+    <!-- New strings for IAQ -->
+    <string name="kitchen_stove_type_prompt">Select Kitchen Stove Type</string>
+    <string-array name="kitchen_stove_type_options">
+        <item></item>
+        <item>Electric Stove</item>
+        <item>Gas</item>
+        <item>Induction</item>
+        <item>No Stove</item>
+    </string-array>
+
+    <string name="kitchen_stove_fan_prompt">Select Kitchen Stove Fan</string>
+    <string-array name="kitchen_stove_fan_options">
+        <item></item>
+        <item>Circulating Fan Blows back into the room</item>
+        <item>Exhaust Fan that blows to the outdoors</item>
+    </string-array>
+
+    <string name="mold_present_prompt">Is there mold present anywhere in the dwelling?</string>
+
+    <!-- Prompts for EditTexts -->
+    <string name="living_room_before_cooking_prompt">Enter PM 2.5 Reading Before Cooking</string>
+    <string name="living_room_after_cooking_prompt">Enter PM 2.5 Reading After Cooking</string>
+    <string name="living_room_humidity_prompt">Enter Living Room Relative Humidity</string>
+    <string name="outdoor_pm25_prompt">Enter Outdoor PM 2.5 Reading</string>
+    <string name="outdoor_humidity_prompt">Enter Outdoor Relative Humidity</string>
 </resources>
