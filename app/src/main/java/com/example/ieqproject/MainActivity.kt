@@ -35,21 +35,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Unified submit button (if exists)
-        val submitButton: Button = findViewById(R.id.submitButton)
-        submitButton.setOnClickListener {
-            saveDataLocally()
-            submitDataToFirebase()
-        }
-
         restoreData()
     }
 
     private fun saveDataLocally() {
         val editor = sharedPreferences.edit()
         editor.putString("homeType", findViewById<Spinner>(R.id.homeTypeSpinner).selectedItem.toString())
-        editor.putBoolean("section8", findViewById<Spinner>(R.id.section8Spinner).selectedItem.toString() == "Yes")
-        editor.putBoolean("oaklandHousing", findViewById<Spinner>(R.id.oaklandHousingSpinner).selectedItem.toString() == "Yes")
+        editor.putString("section8", findViewById<Spinner>(R.id.section8Spinner).selectedItem.toString())
+        editor.putString("oaklandHousing", findViewById<Spinner>(R.id.oaklandHousingSpinner).selectedItem.toString())
         editor.putString("numPeople", findViewById<Spinner>(R.id.numberOfPeopleSpinner).selectedItem.toString())
         editor.putString("squareFootage", findViewById<Spinner>(R.id.squareFootageSpinner).selectedItem.toString())
         editor.putString("date", findViewById<EditText>(R.id.dateEditText).text.toString())
@@ -59,9 +52,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun restoreData() {
+        // Ensure proper retrieval of boolean values by casting to String first and then checking the condition
         findViewById<Spinner>(R.id.homeTypeSpinner).setSelection(getSpinnerIndex(R.id.homeTypeSpinner, sharedPreferences.getString("homeType", "")!!))
-        findViewById<Spinner>(R.id.section8Spinner).setSelection(if (sharedPreferences.getBoolean("section8", false)) 1 else 2)
-        findViewById<Spinner>(R.id.oaklandHousingSpinner).setSelection(if (sharedPreferences.getBoolean("oaklandHousing", false)) 1 else 2)
+
+        findViewById<Spinner>(R.id.section8Spinner).setSelection(
+            if (sharedPreferences.getString("section8", "") == "Yes") 1 else 0 // Adjusted to compare as String
+        )
+
+        findViewById<Spinner>(R.id.oaklandHousingSpinner).setSelection(
+            if (sharedPreferences.getString("oaklandHousing", "") == "Yes") 1 else 0 // Adjusted to compare as String
+        )
+
         findViewById<Spinner>(R.id.numberOfPeopleSpinner).setSelection(getSpinnerIndex(R.id.numberOfPeopleSpinner, sharedPreferences.getString("numPeople", "")!!))
         findViewById<Spinner>(R.id.squareFootageSpinner).setSelection(getSpinnerIndex(R.id.squareFootageSpinner, sharedPreferences.getString("squareFootage", "")!!))
         findViewById<EditText>(R.id.dateEditText).setText(sharedPreferences.getString("date", ""))
@@ -79,9 +80,15 @@ class MainActivity : AppCompatActivity() {
         return 0
     }
 
-    private fun submitDataToFirebase() {
-        // Example usage of the FirebaseUtils class to submit data
-        saveDataLocally()
-        FirebaseUtils.submitDataToFirebase(this, sharedPreferences)
+    // Clear UI components specific to this activity
+    fun clearUIComponents() {
+        findViewById<Spinner>(R.id.homeTypeSpinner).setSelection(0)
+        findViewById<Spinner>(R.id.section8Spinner).setSelection(0)
+        findViewById<Spinner>(R.id.oaklandHousingSpinner).setSelection(0)
+        findViewById<Spinner>(R.id.numberOfPeopleSpinner).setSelection(0)
+        findViewById<Spinner>(R.id.squareFootageSpinner).setSelection(0)
+        findViewById<EditText>(R.id.dateEditText).text.clear()
+        findViewById<EditText>(R.id.streetIntersectionEditText).text.clear()
+        findViewById<EditText>(R.id.buildingAgeEditText).text.clear()
     }
 }
