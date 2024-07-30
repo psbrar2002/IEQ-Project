@@ -2,7 +2,7 @@ package com.example.ieqproject
 
 data class DemographicAttributes(
     val multiracial: Boolean,
-    val americanIndian: List<String>,
+    val americanIndian: Boolean,
     val asian: Boolean,
     val black: Boolean,
     val hispanic: Boolean,

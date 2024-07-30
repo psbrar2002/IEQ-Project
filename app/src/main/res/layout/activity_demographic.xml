@@ -218,6 +218,14 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Navigation Buttons -->
+        <TextView
+            android:id="@+id/ieqScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IEQ Score: 0%"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
