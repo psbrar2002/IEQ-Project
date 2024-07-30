@@ -157,15 +157,15 @@
             android:layout_height="wrap_content"
             android:text="Acoustic Comfort Score: 0" />
         <!-- IEQ Score Display -->
-        <TextView
-            android:id="@+id/ieqScoreTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="IEQ Score: 0%"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="16dp" />
+<!--        <TextView-->
+<!--            android:id="@+id/ieqScoreTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="IEQ Score: 0%"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--            android:textStyle="bold"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginTop="16dp" />-->
         <!-- Navigation Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -189,11 +189,6 @@
         </LinearLayout>
 
         <!-- Submit Button -->
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_gravity="center" />
+
     </LinearLayout>
 </ScrollView>

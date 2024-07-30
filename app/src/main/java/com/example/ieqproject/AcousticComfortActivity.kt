@@ -4,9 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ieqproject.utils.FirebaseUtils
+import com.example.ieqproject.utils.ScoreUtils
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -34,11 +38,14 @@ class AcousticComfortActivity : AppCompatActivity() {
         // Restore saved data
         restoreData()
 
+        setupAcousticComfortListener()
+
         // Listeners for real-time Acoustic Comfort score update
         setupListeners()
 
         // Setup navigation and submit buttons
         setupNavigationButtons()
+        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
     }
 
     private fun setupListeners() {
@@ -59,30 +66,36 @@ class AcousticComfortActivity : AppCompatActivity() {
         outdoorNoiseSourcesEditText.setOnEditorActionListener(listener)
     }
 
-    private fun updateAcousticComfortScore() {
-        val indoorDecibel = findViewById<EditText>(R.id.indoorDecibelEditText).text.toString().toDoubleOrNull() ?: 0.0
-        val outdoorDecibel = findViewById<EditText>(R.id.outdoorDecibelEditText).text.toString().toDoubleOrNull() ?: 0.0
+    private fun setupAcousticComfortListener() {
+        val indoorDecibelEditText = findViewById<EditText>(R.id.indoorDecibelEditText)
+        indoorDecibelEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateAcousticComfortScore()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
 
-        // Example logic: average of indoor and outdoor decibel readings
-        acousticComfortScore = (indoorDecibel + outdoorDecibel) / 2
+    private fun updateAcousticComfortScore() {
+        acousticComfortScore = 0.0 // Initialize score to 0
+
+        val indoorDecibel = findViewById<EditText>(R.id.indoorDecibelEditText).text.toString().toDoubleOrNull()
+
+        // Only score if the input is valid and within the desired range
+        if (indoorDecibel != null && indoorDecibel < 46) {
+            acousticComfortScore += 10.0
+        }
 
         // Display the Acoustic Comfort Score
         acousticComfortScoreTextView.text = "Acoustic Comfort Score: $acousticComfortScore"
         sharedPreferences.edit().putFloat("acousticComfortScore", acousticComfortScore.toFloat()).apply()
-
-        updateIEQScore()
     }
 
-    private fun updateIEQScore() {
-        // Retrieve HVAC and IAQ scores
-        hvacScore = sharedPreferences.getFloat("hvacScore", 0f).toDouble()
-        iaqScore = sharedPreferences.getFloat("iaqScore", 0f).toDouble()
 
-        val totalScore = hvacScore + iaqScore + acousticComfortScore
-        ieqScore = (totalScore / 40) * 100
 
-        ieqScoreTextView.text = "IEQ Score: %.2f%%".format(ieqScore)
-    }
+
+
 
     private fun saveDataLocally() {
         val editor = sharedPreferences.edit()
@@ -105,7 +118,7 @@ class AcousticComfortActivity : AppCompatActivity() {
     private fun setupNavigationButtons() {
         val backButton: Button = findViewById(R.id.backButton)
         val nextButton: Button = findViewById(R.id.nextButton)
-        val submitButton: Button = findViewById(R.id.submitButton)
+
 
         backButton.setOnClickListener {
             saveDataLocally()
@@ -118,10 +131,7 @@ class AcousticComfortActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        submitButton.setOnClickListener {
-            saveDataLocally()
-            FirebaseUtils.submitDataToFirebase(this, sharedPreferences)
-        }
+
     }
 
 //    private fun submitDataToFirebase() {
