@@ -80,13 +80,19 @@
         <item>Induction</item>
         <item>No Stove</item>
     </string-array>
-
+    <!-- Options for Bathroom Ventilation -->
+    <string-array name="bathroom_ventilation_options">
+        <item> </item>
+        <item>Exhaust Fan</item>
+        <item>No Exhaust Fan</item>
+    </string-array>
     <string name="kitchen_stove_fan_prompt">Select Kitchen Stove Fan</string>
     <string-array name="kitchen_stove_fan_options">
         <item></item>
         <item>Circulating Fan Blows back into the room</item>
         <item>Exhaust Fan that blows to the outdoors</item>
     </string-array>
+    <string name="bathroom_ventilation_prompt">Select Bathroom Ventilation</string>
 
     <string name="mold_present_prompt">Is there mold present anywhere in the dwelling?</string>
 
