@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ieqproject.utils.FirebaseUtils
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -24,16 +27,18 @@ class IAQActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
 
         // Initialize UI components for IAQ Attributes
-        IAQAttributes.setupSpinners(this, findViewById(android.R.id.content))
+        setupSpinners()
 
         iaqScoreTextView = findViewById(R.id.iaqScoreTextView)
 
         // Restore saved data
         restoreData()
+        setupIAQScoreListener()
 
         // Listeners for real-time IAQ score update
         val kitchenStoveTypeSpinner: Spinner = findViewById(R.id.kitchenStoveTypeSpinner)
         val kitchenStoveFanSpinner: Spinner = findViewById(R.id.kitchenStoveFanSpinner)
+        val bathroomVentilationSpinner: Spinner = findViewById(R.id.bathroomVentilationSpinner)
         val moldPresentSpinner: Spinner = findViewById(R.id.moldPresentSpinner)
 
         val listener = object : AdapterView.OnItemSelectedListener {
@@ -47,11 +52,11 @@ class IAQActivity : AppCompatActivity() {
 
         kitchenStoveTypeSpinner.onItemSelectedListener = listener
         kitchenStoveFanSpinner.onItemSelectedListener = listener
+        bathroomVentilationSpinner.onItemSelectedListener = listener
         moldPresentSpinner.onItemSelectedListener = listener
 
         val backButton: Button = findViewById(R.id.backButton)
         val nextButton: Button = findViewById(R.id.nextButton)
-        val submitButton: Button = findViewById(R.id.submitButton)
 
         backButton.setOnClickListener {
             saveDataLocally()
@@ -63,33 +68,92 @@ class IAQActivity : AppCompatActivity() {
             val intent = Intent(this, ThermalComfortActivity::class.java)
             startActivity(intent)
         }
+    }
 
-        submitButton.setOnClickListener {
-            saveDataLocally()
-            FirebaseUtils.submitDataToFirebase(this, sharedPreferences)
+    private fun setupSpinners() {
+        val kitchenStoveTypeSpinner: Spinner = findViewById(R.id.kitchenStoveTypeSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.kitchen_stove_type_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            kitchenStoveTypeSpinner.adapter = adapter
+        }
+
+        val kitchenStoveFanSpinner: Spinner = findViewById(R.id.kitchenStoveFanSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.kitchen_stove_fan_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            kitchenStoveFanSpinner.adapter = adapter
+        }
+
+        val bathroomVentilationSpinner: Spinner = findViewById(R.id.bathroomVentilationSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.bathroom_ventilation_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            bathroomVentilationSpinner.adapter = adapter
+        }
+
+        val moldPresentSpinner: Spinner = findViewById(R.id.moldPresentSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.yes_no_options,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            moldPresentSpinner.adapter = adapter
         }
     }
 
+    private fun setupIAQScoreListener() {
+        val livingRoomBeforeCookingEditText = findViewById<EditText>(R.id.livingRoomBeforeCookingEditText)
+        livingRoomBeforeCookingEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateIAQScore()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
     private fun updateIAQScore() {
-        iaqScore = 0.0
+        iaqScore = 0.0 // Initialize score to 0
 
         val kitchenStoveType = findViewById<Spinner>(R.id.kitchenStoveTypeSpinner).selectedItem.toString()
         val kitchenStoveFan = findViewById<Spinner>(R.id.kitchenStoveFanSpinner).selectedItem.toString()
-        val livingRoomBeforeCooking = findViewById<EditText>(R.id.livingRoomBeforeCookingEditText).text.toString().toDoubleOrNull() ?: 0.0
+        val bathroomVentilation = findViewById<Spinner>(R.id.bathroomVentilationSpinner).selectedItem.toString()
+        val livingRoomBeforeCooking = findViewById<EditText>(R.id.livingRoomBeforeCookingEditText).text.toString().toDoubleOrNull()
 
-        // Calculate IAQ Score based on kitchen stove type and fan
-        iaqScore += when (kitchenStoveType) {
-            "Electric Stove", "Induction" -> 2.0
-            else -> 0.0
+        if (kitchenStoveType.isNotBlank()) {
+            iaqScore += when (kitchenStoveType) {
+                "Electric Stove", "Induction" -> 2.0
+                else -> 0.0
+            }
         }
 
-        iaqScore += when (kitchenStoveFan) {
-            "Exhaust Fan that blows to the outdoors" -> 2.0
-            else -> 0.0
+        if (kitchenStoveFan.isNotBlank()) {
+            iaqScore += when (kitchenStoveFan) {
+                "Exhaust Fan that blows to the outdoors" -> 2.0
+                else -> 0.0
+            }
         }
 
-        // Scoring logic for PM 2.5 Reading Before Cooking
-        if (livingRoomBeforeCooking <= 12) {
+        if (bathroomVentilation.isNotBlank()) {
+            iaqScore += when (bathroomVentilation) {
+                "Exhaust Fan" -> 2.0
+                else -> 0.0
+            }
+        }
+
+        // Only score if the input is not null and valid
+        if (livingRoomBeforeCooking != null && livingRoomBeforeCooking <= 12) {
             iaqScore += 4.0
         }
 
@@ -102,6 +166,7 @@ class IAQActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putInt("kitchenStoveTypePosition", findViewById<Spinner>(R.id.kitchenStoveTypeSpinner).selectedItemPosition)
         editor.putInt("kitchenStoveFanPosition", findViewById<Spinner>(R.id.kitchenStoveFanSpinner).selectedItemPosition)
+        editor.putInt("bathroomVentilationPosition", findViewById<Spinner>(R.id.bathroomVentilationSpinner).selectedItemPosition)
         editor.putInt("moldPresentPosition", findViewById<Spinner>(R.id.moldPresentSpinner).selectedItemPosition)
         editor.putString("livingRoomBeforeCooking", findViewById<EditText>(R.id.livingRoomBeforeCookingEditText).text.toString())
         editor.putString("livingRoomAfterCooking", findViewById<EditText>(R.id.livingRoomAfterCookingEditText).text.toString())
@@ -114,6 +179,7 @@ class IAQActivity : AppCompatActivity() {
     private fun restoreData() {
         findViewById<Spinner>(R.id.kitchenStoveTypeSpinner).setSelection(sharedPreferences.getInt("kitchenStoveTypePosition", 0))
         findViewById<Spinner>(R.id.kitchenStoveFanSpinner).setSelection(sharedPreferences.getInt("kitchenStoveFanPosition", 0))
+        findViewById<Spinner>(R.id.bathroomVentilationSpinner).setSelection(sharedPreferences.getInt("bathroomVentilationPosition", 0))
         findViewById<Spinner>(R.id.moldPresentSpinner).setSelection(sharedPreferences.getInt("moldPresentPosition", 0))
         findViewById<EditText>(R.id.livingRoomBeforeCookingEditText).setText(sharedPreferences.getString("livingRoomBeforeCooking", ""))
         findViewById<EditText>(R.id.livingRoomAfterCookingEditText).setText(sharedPreferences.getString("livingRoomAfterCooking", ""))
@@ -122,62 +188,4 @@ class IAQActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.outdoorHumidityEditText).setText(sharedPreferences.getString("outdoorHumidity", ""))
         updateIAQScore()
     }
-
-//    private fun submitDataToFirebase() {
-//        // Retrieve data from SharedPreferences
-//        val indoorDecibel = sharedPreferences.getString("indoorDecibel", "")
-//        val outdoorDecibel = sharedPreferences.getString("outdoorDecibel", "")
-//        val indoorNoiseSources = sharedPreferences.getString("indoorNoiseSources", "")
-//        val outdoorNoiseSources = sharedPreferences.getString("outdoorNoiseSources", "")
-//        val acousticComfortScore = sharedPreferences.getFloat("acousticComfortScore", 0f).toDouble()
-//        val hvacScore = sharedPreferences.getFloat("hvacScore", 0f).toDouble()
-//        val iaqScore = sharedPreferences.getFloat("iaqScore", 0f).toDouble()
-//        val ieqScore = sharedPreferences.getFloat("ieqScore", 0f).toDouble()
-//
-//        // Retrieve IAQ data from SharedPreferences
-//        val kitchenStoveType = sharedPreferences.getString("kitchenStoveType", "")
-//        val kitchenStoveFan = sharedPreferences.getString("kitchenStoveFan", "")
-//        val livingRoomBeforeCooking = sharedPreferences.getString("livingRoomBeforeCooking", "")
-//        val livingRoomAfterCooking = sharedPreferences.getString("livingRoomAfterCooking", "")
-//        val livingRoomHumidity = sharedPreferences.getString("livingRoomHumidity", "")
-//        val outdoorPM25 = sharedPreferences.getString("outdoorPM25", "")
-//        val outdoorHumidity = sharedPreferences.getString("outdoorHumidity", "")
-//        val moldPresent = sharedPreferences.getString("moldPresent", "")
-//
-//        // Create an IAQAttributes object
-//        val iaqAttributes = IAQAttributes(
-//            kitchenStoveType ?: "",
-//            kitchenStoveFan ?: "",
-//            livingRoomBeforeCooking ?: "",
-//            livingRoomAfterCooking ?: "",
-//            livingRoomHumidity ?: "",
-//            outdoorPM25 ?: "",
-//            outdoorHumidity ?: "",
-//            moldPresent ?: "",
-//            iaqScore
-//        )
-//
-//        // Create a map or data class to structure the survey data
-//        val surveyData = mapOf(
-//            "indoorDecibel" to indoorDecibel,
-//            "outdoorDecibel" to outdoorDecibel,
-//            "indoorNoiseSources" to indoorNoiseSources,
-//            "outdoorNoiseSources" to outdoorNoiseSources,
-//            "acousticComfortScore" to acousticComfortScore,
-//            "hvacScore" to hvacScore,
-//            "iaqScore" to iaqScore,
-//            "ieqScore" to ieqScore,
-//            "iaqAttributes" to iaqAttributes
-//        )
-//
-//        // Push data to Firebase under a single reference
-//        database.child("surveyData").push().setValue(surveyData)
-//            .addOnSuccessListener {
-//                Toast.makeText(this, "Data submitted successfully", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, "Failed to submit data", Toast.LENGTH_SHORT).show()
-//            }
-//    }
-
 }

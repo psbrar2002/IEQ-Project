@@ -89,8 +89,35 @@
                     android:prompt="@string/kitchen_stove_fan_prompt" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <!-- Bathroom Ventilation -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
-        <!-- Living Room PM 2.5 Reading Before Cooking -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bathroom Ventilation"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/bathroomVentilationSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/bathroom_ventilation_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    <!-- Living Room PM 2.5 Reading Before Cooking -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -294,11 +321,6 @@
         </LinearLayout>
 
         <!-- Submit Button -->
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_gravity="center" />
+
     </LinearLayout>
 </ScrollView>
