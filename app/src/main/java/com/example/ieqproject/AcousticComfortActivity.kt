@@ -33,7 +33,7 @@ class AcousticComfortActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
 
         acousticComfortScoreTextView = findViewById(R.id.acousticComfortScoreTextView)
-        ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
+//        ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
 
         // Restore saved data
         restoreData()
@@ -45,7 +45,7 @@ class AcousticComfortActivity : AppCompatActivity() {
 
         // Setup navigation and submit buttons
         setupNavigationButtons()
-        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
+//        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
     }
 
     private fun setupListeners() {
