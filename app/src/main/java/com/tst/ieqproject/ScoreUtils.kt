@@ -1,4 +1,4 @@
-package com.example.ieqproject.utils
+package com.tst1.ieqproject.utils
 
 import android.content.Context
 import android.content.SharedPreferences

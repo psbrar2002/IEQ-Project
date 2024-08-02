@@ -1,4 +1,4 @@
-package com.example.ieqproject
+package com.tst.ieqproject
 
 import android.content.Context
 import android.content.Intent
@@ -6,11 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ieqproject.utils.FirebaseUtils
-import com.example.ieqproject.utils.ScoreUtils
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 

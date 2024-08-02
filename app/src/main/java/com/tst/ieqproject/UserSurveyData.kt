@@ -1,4 +1,4 @@
-package com.example.ieqproject
+package com.tst.ieqproject
 
 data class UserSurveyData(
     val hvacAttributes: HVACAttributes,

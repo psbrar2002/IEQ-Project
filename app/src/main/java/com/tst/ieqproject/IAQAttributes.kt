@@ -1,9 +1,10 @@
-package com.example.ieqproject
+package com.tst.ieqproject
 
 import android.content.Context
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.tst.ieqproject.R
 
 data class IAQAttributes(
     val kitchenStoveType: String,

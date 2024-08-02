@@ -1,11 +1,16 @@
-package com.example.ieqproject.utils
+package com.tst1.ieqproject.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
-import com.example.ieqproject.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.tst.ieqproject.AcousticComfortAttributes
+import com.tst.ieqproject.IAQAttributes
+import com.tst.ieqproject.DemographicAttributes
+import com.tst.ieqproject.DwellingAttributes
+import com.tst.ieqproject.HVACAttributes
+import com.tst.ieqproject.ThermalComfortAttributes
+import com.tst.ieqproject.UserSurveyData
 import java.util.*
 
 object FirebaseUtils {

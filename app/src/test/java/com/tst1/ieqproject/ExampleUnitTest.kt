@@ -1,4 +1,4 @@
-package com.example.ieqproject
+package com.tst1.ieqproject
 
 import org.junit.Test
 

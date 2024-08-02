@@ -1,4 +1,4 @@
-package com.example.ieqproject
+package com.tst.ieqproject
 
 import android.content.Context
 import android.content.Intent
@@ -10,8 +10,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ieqproject.utils.FirebaseUtils
-import com.example.ieqproject.utils.ScoreUtils
+import com.tst1.ieqproject.utils.FirebaseUtils
+import com.tst1.ieqproject.utils.ScoreUtils
 
 class DemographicActivity : AppCompatActivity() {
 
