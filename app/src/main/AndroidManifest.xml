@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DwellingAttributesActivity"/>
         <activity android:name=".HVACActivity" />
         <activity android:name=".IAQActivity" />
         <activity android:name=".ThermalComfortActivity" />
