@@ -9,9 +9,10 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.tst1.ieqproject.utils.FirebaseUtils
-import com.tst1.ieqproject.utils.ScoreUtils
+import com.tst.ieqproject.utils.FirebaseUtils
+import com.tst.ieqproject.utils.ScoreUtils
 
 class DemographicActivity : AppCompatActivity() {
 
@@ -31,7 +32,7 @@ class DemographicActivity : AppCompatActivity() {
         restoreData()
 
         // Update IEQ Score on screen
-        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
+        updateIEQScore()
 
         val backButton: Button = findViewById(R.id.backButton)
         val submitButton: Button = findViewById(R.id.submitButton)
@@ -43,17 +44,70 @@ class DemographicActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             saveDataLocally()
-            FirebaseUtils.submitDataToFirebase(this, sharedPreferences) { success ->
-                if (success) {
-                    clearAllData()
-                    Toast.makeText(this, "Data submitted successfully", Toast.LENGTH_SHORT).show()
-                    // Navigate back to the start
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Failed to submit data", Toast.LENGTH_SHORT).show()
-                }
+            showSubmitConfirmationDialog()
+        }
+
+        val exitButton: Button = findViewById(R.id.exitButton)
+        exitButton.setOnClickListener {
+            showExitConfirmationDialog()
+        }
+    }
+
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit Survey")
+        builder.setMessage("Are you sure you want to exit the survey? Your progress will not be saved.")
+
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Clear all data before exiting
+            clearAllData()
+
+            // Navigate back to the main screen
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showSubmitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Submit Survey")
+        builder.setMessage("Are you sure you want to submit the survey?")
+
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Submit the data to Firebase
+            submitSurveyData()
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun submitSurveyData() {
+        val isPublic = false // Set to 'true' for public surveys, 'false' for private
+
+        // Submit the data to Firebase
+        FirebaseUtils.submitSurveyDataToFirebase(this, sharedPreferences, isPublic) { success, identifier ->
+            if (success) {
+                Toast.makeText(this, "Survey data submitted successfully!", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, SubmissionActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.putExtra("isPublicSurvey", isPublic)  // Pass the survey type
+                intent.putExtra("surveyIdentifier", identifier)  // Pass the unique identifier
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Failed to submit survey data. Please try again.", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -61,6 +115,7 @@ class DemographicActivity : AppCompatActivity() {
     private fun saveDataLocally() {
         val editor = sharedPreferences.edit()
         editor.putBoolean("multiracial", findViewById<CheckBox>(R.id.multiracialCheckBox).isChecked)
+        editor.putBoolean("americanIndian", findViewById<CheckBox>(R.id.americanIndianCheckBox).isChecked)
         editor.putBoolean("asian", findViewById<CheckBox>(R.id.asianCheckBox).isChecked)
         editor.putBoolean("black", findViewById<CheckBox>(R.id.blackCheckBox).isChecked)
         editor.putBoolean("hispanic", findViewById<CheckBox>(R.id.hispanicCheckBox).isChecked)
@@ -69,17 +124,24 @@ class DemographicActivity : AppCompatActivity() {
         editor.putBoolean("other", findViewById<CheckBox>(R.id.otherCheckBox).isChecked)
         editor.putString("otherEthnicity", findViewById<EditText>(R.id.otherEthnicityEditText).text.toString())
         editor.apply()
+
+        // Update the IEQ Score when saving data
+        updateIEQScore()
     }
 
     private fun restoreData() {
         findViewById<CheckBox>(R.id.multiracialCheckBox).isChecked = sharedPreferences.getBoolean("multiracial", false)
         findViewById<CheckBox>(R.id.asianCheckBox).isChecked = sharedPreferences.getBoolean("asian", false)
         findViewById<CheckBox>(R.id.blackCheckBox).isChecked = sharedPreferences.getBoolean("black", false)
+        findViewById<CheckBox>(R.id.americanIndianCheckBox).isChecked = sharedPreferences.getBoolean("americanIndian", false)
         findViewById<CheckBox>(R.id.hispanicCheckBox).isChecked = sharedPreferences.getBoolean("hispanic", false)
         findViewById<CheckBox>(R.id.nativeHawaiianCheckBox).isChecked = sharedPreferences.getBoolean("nativeHawaiian", false)
         findViewById<CheckBox>(R.id.whiteCheckBox).isChecked = sharedPreferences.getBoolean("white", false)
         findViewById<CheckBox>(R.id.otherCheckBox).isChecked = sharedPreferences.getBoolean("other", false)
         findViewById<EditText>(R.id.otherEthnicityEditText).setText(sharedPreferences.getString("otherEthnicity", ""))
+
+        // Update the IEQ Score when restoring data
+        updateIEQScore()
     }
 
     private fun clearAllData() {
@@ -87,5 +149,9 @@ class DemographicActivity : AppCompatActivity() {
         editor.clear()
         editor.apply()
         restoreData()
+    }
+
+    private fun updateIEQScore() {
+        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
     }
 }

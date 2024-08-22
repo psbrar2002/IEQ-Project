@@ -6,16 +6,19 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
+import android.util.Log
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.tst.ieqproject.utils.ScoreUtils
 
 class ThermalComfortActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var thermalComfortScoreTextView: TextView
+    private lateinit var ieqScoreTextView: TextView
     private lateinit var database: DatabaseReference
     private var thermalComfortScore: Double = 0.0
 
@@ -27,6 +30,7 @@ class ThermalComfortActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
 
         thermalComfortScoreTextView = findViewById(R.id.thermalComfortScoreTextView)
+        ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
 
         // Restore saved data
         restoreData()
@@ -36,33 +40,18 @@ class ThermalComfortActivity : AppCompatActivity() {
         val indoorTempEditText: EditText = findViewById(R.id.indoorTempEditText)
         val outdoorTempEditText: EditText = findViewById(R.id.outdoorTempEditText)
 
-        val listener = object : TextView.OnEditorActionListener {
-            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-                updateThermalComfortScore()
-                saveDataLocally()
-                return false
-            }
-        }
+        val listener = TextWatcherAdapter { updateThermalComfortScore() }
 
-        indoorTempEditText.setOnEditorActionListener(listener)
-        outdoorTempEditText.setOnEditorActionListener(listener)
+        indoorTempEditText.addTextChangedListener(listener)
+        outdoorTempEditText.addTextChangedListener(listener)
 
-        val backButton: Button = findViewById(R.id.backButton)
-        val nextButton: Button = findViewById(R.id.nextButton)
+        // Setup navigation buttons
+        setupNavigationButtons()
+    }
 
-
-        backButton.setOnClickListener {
-            saveDataLocally()
-            finish()  // Navigate back to the previous activity
-        }
-
-        nextButton.setOnClickListener {
-            saveDataLocally()
-            val intent = Intent(this, AcousticComfortActivity::class.java)
-            startActivity(intent)
-        }
-
-
+    override fun onResume() {
+        super.onResume()
+        updateThermalComfortScore()
     }
 
     private fun setupThermalComfortListener() {
@@ -87,40 +76,82 @@ class ThermalComfortActivity : AppCompatActivity() {
         // Display the Thermal Comfort Score
         thermalComfortScoreTextView.text = "Thermal Comfort Score: $thermalComfortScore"
         sharedPreferences.edit().putFloat("thermalComfortScore", thermalComfortScore.toFloat()).apply()
+        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
     }
 
-
     private fun saveDataLocally() {
+        val indoorTemp = findViewById<EditText>(R.id.indoorTempEditText).text.toString()
+        val outdoorTemp = findViewById<EditText>(R.id.outdoorTempEditText).text.toString()
         val editor = sharedPreferences.edit()
-        editor.putString("indoorTemp", findViewById<EditText>(R.id.indoorTempEditText).text.toString())
-        editor.putString("outdoorTemp", findViewById<EditText>(R.id.outdoorTempEditText).text.toString())
+        editor.putString("indoorTemperature", indoorTemp)
+        editor.putString("outdoorTemperature", outdoorTemp)
         editor.apply()
+
+        // Log the saved values
+        Log.d("ThermalComfortActivity", "Saved indoorTemperature: $indoorTemp")
+        Log.d("ThermalComfortActivity", "Saved outdoorTemperature: $outdoorTemp")
     }
 
     private fun restoreData() {
-        findViewById<EditText>(R.id.indoorTempEditText).setText(sharedPreferences.getString("indoorTemp", ""))
-        findViewById<EditText>(R.id.outdoorTempEditText).setText(sharedPreferences.getString("outdoorTemp", ""))
+        val indoorTemp = sharedPreferences.getString("indoorTemperature", "")
+        val outdoorTemp = sharedPreferences.getString("outdoorTemperature", "")
+        findViewById<EditText>(R.id.indoorTempEditText).setText(indoorTemp)
+        findViewById<EditText>(R.id.outdoorTempEditText).setText(outdoorTemp)
+
+        // Log the restored values
+        Log.d("ThermalComfortActivity", "Restored indoorTemperature: $indoorTemp")
+        Log.d("ThermalComfortActivity", "Restored outdoorTemperature: $outdoorTemp")
+
         updateThermalComfortScore()
     }
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit Survey")
+        builder.setMessage("Are you sure you want to exit the survey? Your progress will not be saved.")
 
-//    private fun submitDataToFirebase() {
-//        // Get Thermal Comfort data from SharedPreferences
-//        val indoorTemp = sharedPreferences.getString("indoorTemp", "")
-//        val outdoorTemp = sharedPreferences.getString("outdoorTemp", "")
-//        val thermalComfortScore = sharedPreferences.getFloat("thermalComfortScore", 0f)
-//
-//        val thermalComfortAttributes = ThermalComfortAttributes(
-//            indoorTemp ?: "",
-//            outdoorTemp ?: "",
-//            thermalComfortScore.toDouble()
-//        )
-//
-//        database.child("thermalComfortAttributes").push().setValue(thermalComfortAttributes)
-//            .addOnSuccessListener {
-//                Toast.makeText(this, "Data submitted successfully", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, "Failed to submit data", Toast.LENGTH_SHORT).show()
-//            }
-//    }
+        builder.setPositiveButton("Yes") { dialog, which ->
+            // Clear all data before exiting
+            clearAllData()
+
+            // Navigate back to the main screen
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        builder.setNegativeButton("No") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun clearAllData() {
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+        restoreData()
+    }
+
+
+    private fun setupNavigationButtons() {
+        val backButton: Button = findViewById(R.id.backButton)
+        val nextButton: Button = findViewById(R.id.nextButton)
+
+        backButton.setOnClickListener {
+            saveDataLocally()
+            finish()  // Navigate back to the previous activity
+        }
+
+        nextButton.setOnClickListener {
+            saveDataLocally()
+            val intent = Intent(this, AcousticComfortActivity::class.java)
+            startActivity(intent)
+        }
+        val exitButton: Button = findViewById(R.id.exitButton)
+        exitButton.setOnClickListener {
+            showExitConfirmationDialog()
+        }
+    }
 }

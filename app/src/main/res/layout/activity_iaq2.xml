@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IAQActivity">
+    tools:context=".IAQActivity2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- IEQ Indoor Air Quality (IAQ) - PM 2.5 Readings Header -->
+        <!-- Title Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,9 +28,38 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IEQ Indoor Air Quality (IAQ) - PM 2.5 Readings"
+                    android:text="IEQ: Indoor Air Quality (IAQ)"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Is there a kitchen? -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is there a kitchen?"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/kitchenSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/yes_no_options"
+                    android:prompt="@string/kitchen_prompt" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -55,9 +84,10 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/kitchenStoveTypeSpinner"
+                    android:id="@+id/kitchenStoveTypeSpinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:entries="@array/kitchen_stove_type_array"
                     android:prompt="@string/kitchen_stove_type_prompt" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -83,13 +113,15 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/kitchenStoveFanSpinner"
+                    android:id="@+id/kitchenStoveFanSpinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:entries="@array/kitchen_stove_fan_array"
                     android:prompt="@string/kitchen_stove_fan_prompt" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <!-- Bathroom Ventilation -->
+
+        <!-- Is there a bathroom? -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,18 +138,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bathroom Ventilation"
+                    android:text="Is there a bathroom?"
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/bathroomVentilationSpinner"
+                    android:id="@+id/bathroomSpinner2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:entries="@array/yes_no_options"
+                    android:prompt="@string/bathroom_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bathroom Ventilation Type -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bathroom Ventilation Type"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/bathroomVentilationSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/bathroom_ventilation_array"
                     android:prompt="@string/bathroom_ventilation_prompt" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-    <!-- Living Room PM 2.5 Reading Before Cooking -->
+        <!-- Is there mold present? -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,19 +196,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Living Room PM 2.5 Reading Before Cooking - average after 4 minutes"
+                    android:text="Is there mold present anywhere in the dwelling?"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/moldPresentSpinner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/yes_no_options"
+                    android:prompt="@string/mold_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Indoor PM 2.5 Reading -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Indoor PM 2.5 Reading Before Cooking - average after 4 minutes (add number only)"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/livingRoomBeforeCookingEditText"
+                    android:id="@+id/pm25BeforeCookingEditText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/living_room_before_cooking_prompt"
+                    android:hint="Enter PM 2.5 value"
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Living Room PM 2.5 Reading After Cooking -->
+        <!-- Indoor Relative Humidity -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -163,43 +254,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Living Room PM 2.5 Reading After Cooking - average after 4 minutes"
+                    android:text="Indoor Relative Humidity - average after 4 minutes (add number only)"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/livingRoomAfterCookingEditText"
+                    android:id="@+id/indoorHumidityEditText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/living_room_after_cooking_prompt"
-                    android:inputType="numberDecimal" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Living Room Relative Humidity -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Living Room Relative Humidity - average after 4 minutes"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/livingRoomHumidityEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/living_room_humidity_prompt"
+                    android:hint="Enter indoor humidity value"
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -221,14 +283,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Outdoor PM 2.5 Reading - average after 4 minutes"
+                    android:text="Outdoor PM 2.5 Reading - average after 4 minutes (add number only)"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/outdoorPM25EditText"
+                    android:id="@+id/outdoorPM25EditText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/outdoor_pm25_prompt"
+                    android:hint="Enter outdoor PM 2.5 value"
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -250,61 +312,45 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Outdoor Relative Humidity - average after 4 minutes"
+                    android:text="Outdoor Relative Humidity - average after 4 minutes (add number only)"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/outdoorHumidityEditText"
+                    android:id="@+id/outdoorHumidityEditText2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/outdoor_humidity_prompt"
+                    android:hint="Enter outdoor humidity value"
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Is there mold present anywhere in the dwelling? -->
-        <androidx.cardview.widget.CardView
+        <!-- Score Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:padding="8dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/iaqScoreTextView2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:text="IAQ Score: 0"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Is there mold present anywhere in the dwelling?"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/ieqScoreTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IEQ Score: 0"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/moldPresentSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/mold_present_prompt" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- IAQ Score -->
-        <TextView
-            android:id="@+id/iaqScoreTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="IAQ Score: 0"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:id="@+id/ieqScoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IEQ Score: 0%"
-            android:textSize="20sp"
-            android:layout_marginTop="16dp" />
         <!-- Navigation Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -341,17 +387,16 @@
                 android:layout_marginStart="8dp" />
 
         </LinearLayout>
-
-        <!-- Progress Bar at the bottom -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progress="50"
-            android:max="100"/>
+            android:progress="60"
+            android:max="100"
+            />
 
         <!-- Page Counter at the bottom -->
         <TextView
@@ -361,11 +406,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:padding="8dp"
-            android:text="Page 3 of 6"
+            android:text="Page 3 of 5"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal"/>
-
     </LinearLayout>
 </ScrollView>

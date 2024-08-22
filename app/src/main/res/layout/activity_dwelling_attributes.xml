@@ -12,6 +12,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
         <!-- Dwelling Attributes Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -224,6 +225,10 @@
                     android:layout_height="wrap_content"
                     android:text="Nearby Street Intersection"
                     android:textStyle="bold" />
+                <ListView
+                    android:id="@+id/suggestionsListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <EditText
                     android:id="@+id/streetIntersectionEditText"
@@ -263,11 +268,64 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/hvacButton"
+
+
+        <TextView
+            android:id="@+id/ieqScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next" />
+            android:text="IEQ Score: 0%"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Exit"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/hvacButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+        <!-- Progress Bar at the bottom -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="16"
+            android:max="100"
+            />
+
+        <!-- Page Counter at the bottom -->
+        <TextView
+            android:id="@+id/pageCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:text="Page 1 of 6"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </ScrollView>

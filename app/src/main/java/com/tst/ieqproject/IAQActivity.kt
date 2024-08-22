@@ -7,14 +7,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.tst.ieqproject.utils.ScoreUtils
 
 class IAQActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var iaqScoreTextView: TextView
+    private lateinit var ieqScoreTextView: TextView
     private lateinit var database: DatabaseReference
     private var iaqScore: Double = 0.0
 
@@ -29,6 +32,7 @@ class IAQActivity : AppCompatActivity() {
         setupSpinners()
 
         iaqScoreTextView = findViewById(R.id.iaqScoreTextView)
+        ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
 
         // Restore saved data
         restoreData()
@@ -67,6 +71,44 @@ class IAQActivity : AppCompatActivity() {
             val intent = Intent(this, ThermalComfortActivity::class.java)
             startActivity(intent)
         }
+        val exitButton: Button = findViewById(R.id.exitButton)
+        exitButton.setOnClickListener {
+            showExitConfirmationDialog()
+        }
+    }
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit Survey")
+        builder.setMessage("Are you sure you want to exit the survey? Your progress will not be saved.")
+
+        builder.setPositiveButton("Yes") { dialog, which ->
+            // Clear all data before exiting
+            clearAllData()
+
+            // Navigate back to the main screen
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        builder.setNegativeButton("No") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun clearAllData() {
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+        restoreData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateIAQScore()
     }
 
     private fun setupSpinners() {
@@ -159,6 +201,7 @@ class IAQActivity : AppCompatActivity() {
         // Display the IAQ Score
         iaqScoreTextView.text = "IAQ Score: $iaqScore"
         sharedPreferences.edit().putFloat("iaqScore", iaqScore.toFloat()).apply()
+        ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
     }
 
     private fun saveDataLocally() {
@@ -167,6 +210,10 @@ class IAQActivity : AppCompatActivity() {
         editor.putInt("kitchenStoveFanPosition", findViewById<Spinner>(R.id.kitchenStoveFanSpinner).selectedItemPosition)
         editor.putInt("bathroomVentilationPosition", findViewById<Spinner>(R.id.bathroomVentilationSpinner).selectedItemPosition)
         editor.putInt("moldPresentPosition", findViewById<Spinner>(R.id.moldPresentSpinner).selectedItemPosition)
+        editor.putString("kitchenStoveType", findViewById<Spinner>(R.id.kitchenStoveTypeSpinner).selectedItem.toString())
+        editor.putString("kitchenStoveFan", findViewById<Spinner>(R.id.kitchenStoveFanSpinner).selectedItem.toString())
+        editor.putString("bathroomVentilation", findViewById<Spinner>(R.id.bathroomVentilationSpinner).selectedItem.toString())
+        editor.putString("moldPresent", findViewById<Spinner>(R.id.moldPresentSpinner).selectedItem.toString())
         editor.putString("livingRoomBeforeCooking", findViewById<EditText>(R.id.livingRoomBeforeCookingEditText).text.toString())
         editor.putString("livingRoomAfterCooking", findViewById<EditText>(R.id.livingRoomAfterCookingEditText).text.toString())
         editor.putString("livingRoomHumidity", findViewById<EditText>(R.id.livingRoomHumidityEditText).text.toString())

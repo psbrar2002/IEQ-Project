@@ -14,8 +14,8 @@ android {
         applicationId = "com.tst.ieqproject"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 4
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +41,9 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("org.apache.commons:commons-csv:1.9.0")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")

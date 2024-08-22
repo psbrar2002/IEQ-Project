@@ -223,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="IEQ Score: 0%"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_marginTop="16dp" />
 
         <LinearLayout
@@ -232,7 +232,14 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:padding="16dp">
-
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Exit"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@android:color/holo_red_dark" />
             <Button
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
@@ -246,5 +253,29 @@
                 android:text="Submit"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
+        <!-- Progress Bar at the bottom -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progress="100"
+            android:max="100"/>
+
+        <!-- Page Counter at the bottom -->
+        <TextView
+            android:id="@+id/pageCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:text="Page 6 of 6"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </ScrollView>

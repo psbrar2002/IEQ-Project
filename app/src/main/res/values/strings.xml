@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IEQ Project</string>
+    <string name="app_name">IEQ Survey</string>
     <string name="home_type_prompt">Select Home Type</string>
     <string-array name="home_type_options">
         <item></item> <!-- Blank option -->
@@ -37,10 +37,10 @@
     <string name="square_footage_prompt">Select square footage</string>
     <string-array name="square_footage_options">
         <item></item>
-        <item>Less than 500 square feet (10x15ft)</item>
-        <item>500-1000 sq ft (10ft x10ft)</item>
-        <item>1000-2000 sq ft (35 x 35 ft)</item>
-        <item>More than 2000 sq ft (45x45 ft)</item>
+        <item>Less than 500 square feet</item>
+        <item>500-1000 sq ft</item>
+        <item>1000-2000 sq ft</item>
+        <item>More than 2000 sq ft</item>
     </string-array>
 
     <!-- Date -->
@@ -102,4 +102,114 @@
     <string name="living_room_humidity_prompt">Enter Living Room Relative Humidity</string>
     <string name="outdoor_pm25_prompt">Enter Outdoor PM 2.5 Reading</string>
     <string name="outdoor_humidity_prompt">Enter Outdoor Relative Humidity</string>
+
+
+    <!-- Prompts for Second Survey -->
+    <string name="building_type_prompt">Select Building Type</string>
+    <string name="type_of_room_prompt">Select Room Type</string>
+    <string name="square_footage_prompt2">Select Square Footage Estimate</string>
+    <string name="gps_location_prompt">Enter GPS Coordinates or Address</string>
+    <string name="age_of_building_prompt">Enter Age of Building</string>
+<!--    <string name="date_prompt">Enter Date (mm/dd/yyyy)</string>-->
+    <string name="time_of_day_prompt">Enter Time of Day (AM/PM)</string>
+    <string name="season_prompt">Select Season</string>
+    <!-- Spinner Arrays -->
+    <string-array name="building_type_options">
+        <item> </item>
+        <item>School Building</item>
+        <item>Recreation Center</item>
+        <item>Library</item>
+        <item>Community Organization</item>
+        <item>Medical Clinic</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="type_of_room_options">
+        <item> </item>
+        <item>Classroom</item>
+        <item>Lobby</item>
+        <item>Auditorium</item>
+        <item>Cafeteria</item>
+        <item>Library</item>
+        <item>Bathroom</item>
+        <item>Science Laboratory</item>
+        <item>Counseling Office</item>
+        <item>School Office</item>
+        <item>Kitchen</item>
+        <item>Other</item>
+    </string-array>
+
+
+    <string-array name="season_options">
+        <item> </item>
+        <item>Spring/Summer (May - September)</item>
+        <item>Fall/Winter (October - April)</item>
+    </string-array>
+
+
+
+    <string-array name="yes_no_array">
+        <item> </item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="air_conditioning_type_array">
+        <item> </item>
+        <item>Central (blows out vents in wall or ceiling)</item>
+        <item>Mini-Split</item>
+    </string-array>
+
+    <string-array name="heating_type_array">
+        <item> </item>
+        <item>No Heat</item>
+        <item>Gravity Heater on wall, baseboard, or in the floor. Gets hot but does not blow air</item>
+        <item>Central Heat with Filter Warm air blows out vents in wall or ceiling and has a filter to clean the air</item>
+        <item>Central Heat WITHOUT Filter Warm air blows out vents in wall or ceiling and does not have a filter to clean the air</item>
+        <item>Radiator Steam heat through pipes</item>
+    </string-array>
+
+
+
+
+    <!-- IAQ Section -->
+    <string name="kitchen_prompt">Is there a kitchen?</string>
+
+    <string-array name="kitchen_stove_type_array">
+        <item></item>
+        <item>Electric</item>
+        <item>Gas</item>
+        <item>Induction</item>
+        <item>No stove</item>
+    </string-array>
+
+    <string-array name="kitchen_stove_fan_array">
+        <item></item>
+        <item>Circulating Fan Blows back into the room</item>
+        <item>Exhaust Fan that blows to the outdoors</item>
+    </string-array>
+
+    <string name="bathroom_prompt">Is there a bathroom?</string>
+
+    <string-array name="bathroom_ventilation_array">
+        <item></item>
+        <item>No Exhaust Fan</item>
+        <item>Exhaust Fan</item>
+    </string-array>
+
+    <string name="indoor_pm25_prompt">Enter Indoor PM 2.5 Reading</string>
+
+    <string name="indoor_humidity_prompt">Enter Indoor Humidity</string>
+
+    <string name="mold_prompt">Is mold present?</string>
+
+    <!-- Yes/No Options -->
+
+
+
+    <string-array name="bathroom_ventilation_type_array">
+        <item>No Exhaust Fan</item>
+        <item>Exhaust Fan</item>
+    </string-array>
+
 </resources>

@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="exitButtonStartColor">#FF3B30</color> <!-- Bright Red -->
+    <color name="exitButtonEndColor">#D32F2F</color>   <!-- Darker Red -->
+    <color name="colorA">#00AA50</color>
+    <color name="colorB">#55C649</color>
+    <color name="colorC">#E4D443</color>
+    <color name="colorD">#FFBF00</color>
+    <color name="colorE">#FF8000</color>
+    <color name="colorF">#FF4000</color>
+    <color name="colorG">#D60000</color>
 </resources>

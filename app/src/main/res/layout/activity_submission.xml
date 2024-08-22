@@ -1,0 +1,110 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <!-- Survey Identifier TextView -->
+        <TextView
+            android:id="@+id/surveyIdentifierTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Survey ID: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ieqscore"
+            android:contentDescription="IEQ Score Image"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/ieqScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IEQ Score: 0.00%"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thank you for completing the IEQ survey and contributing to this community science project. Young scientists and activists are using this data to advocate for changes to make homes and public buildings more resilient to climate changes in Oakland and California. If you have questions or would like to be more involved, please contact ieq.tool@gmail.com or your research facilitator."
+            android:textSize="16sp"
+            android:paddingBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/buildAirPurifierLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Build your own air purification system"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/writeLetterLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Write a letter to your landlord requesting repairs (here’s a template)"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/getSupportLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get support from tenant organizers in Oakland"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/housingRightsLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Have a conversation with a housing legal rights organization"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/writeComplaintLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Write a complaint to the City of Oakland code enforcement division"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Return to Homepage"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+</ScrollView>

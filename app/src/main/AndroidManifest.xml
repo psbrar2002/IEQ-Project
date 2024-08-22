@@ -28,8 +28,12 @@
         <activity android:name=".ThermalComfortActivity" />
         <activity android:name=".AcousticComfortActivity"/>
         <activity android:name=".DemographicActivity"/>
-
-
+        <activity android:name=".BuildingAttributesActivity"/>
+        <activity android:name=".HVACActivity2"/>
+        <activity android:name=".IAQActivity2"/>
+        <activity android:name=".ThermalComfortActivity2"/>
+        <activity android:name=".AcousticComfortActivity2"/>
+        <activity android:name=".SubmissionActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

@@ -1,9 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AcousticComfortActivity">
+    tools:context=".HVACActivity2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Acoustic Comfort Header -->
+        <!-- Category Title -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,13 +28,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IEQ: Acoustic Comfort"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
+                    android:text="IEQ: Heating Ventilation Air Conditioning (HVAC)"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_horizontal"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Indoor Decibel Reading -->
+        <!-- Air Conditioning Question -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,19 +52,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Indoor Decibel Reading (add number only)"
+                    android:text="Is there Air Conditioning?"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/indoorDecibelEditText"
+                <Spinner
+                    android:id="@+id/airConditioningSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Indoor Decibel Reading"
-                    android:inputType="numberDecimal" />
+                    android:entries="@array/yes_no_array" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- List the sources of noise you hear indoors -->
+        <!-- Type of Air Conditioning Question -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,19 +81,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="List the sources of noise you hear indoors"
+                    android:text="Type of Air Conditioning"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/indoorNoiseSourcesEditText"
+                <Spinner
+                    android:id="@+id/typeOfAirConditioningSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter sources of noise indoors"
-                    android:inputType="text" />
+                    android:entries="@array/air_conditioning_type_array" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Outdoor Decibel Reading -->
+        <!-- Type of Heating Question -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,19 +110,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Outdoor Decibel Reading (add number only)"
+                    android:text="What type of working Heating does the building have?"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/outdoorDecibelEditText"
+                <Spinner
+                    android:id="@+id/heatingTypeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Outdoor Decibel Reading"
-                    android:inputType="numberDecimal" />
+                    android:entries="@array/heating_type_array" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- List the sources of noise you hear outdoors -->
+        <!-- Additional Appliances Question -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,33 +139,74 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="List the sources of noise you hear outdoors"
+                    android:text="Do you have any appliances like window air conditioners?"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/outdoorNoiseSourcesEditText"
+                <Spinner
+                    android:id="@+id/additionalAppliancesSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter sources of noise outdoors"
-                    android:inputType="text" />
+                    android:entries="@array/yes_no_array" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Acoustic Comfort Score -->
-        <TextView
-            android:id="@+id/acousticComfortScoreTextView"
+        <!-- Portable Air Filter Question -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Acoustic Comfort Score: 0"
-            android:textSize="18sp"/>
-        <!-- IEQ Score Display -->
-        <TextView
-            android:id="@+id/ieqScoreTextView"
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is there a portable air filter in the space?"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/portableAirFilterSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/yes_no_array" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- HVAC and IEQ Scores Side by Side -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IEQ Score: 0%"
-            android:textSize="20sp"
-            android:layout_marginTop="16dp" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/hvacScoreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HVAC Score: 0"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:id="@+id/ieqScoreTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IEQ Score: 0%"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <!-- Navigation Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,16 +242,16 @@
                 android:layout_marginStart="8dp" />
 
         </LinearLayout>
-        <!-- Progress Bar at the bottom -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             style="?android:attr/progressBarStyleHorizontal"
-            android:progress="83"
-            android:max="100"/>
+            android:progress="40"
+            android:max="100"
+            />
 
         <!-- Page Counter at the bottom -->
         <TextView
@@ -219,11 +261,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:padding="8dp"
-            android:text="Page 5 of 6"
+            android:text="Page 2 of 5"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal"/>
-
     </LinearLayout>
 </ScrollView>
