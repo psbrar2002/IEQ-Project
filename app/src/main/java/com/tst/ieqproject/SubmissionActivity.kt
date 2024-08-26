@@ -30,7 +30,9 @@ class SubmissionActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         isPublicSurvey = intent.getBooleanExtra("isPublicSurvey", false)
         ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
-        surveyId = intent.getStringExtra("surveyIdentifier") ?: generateDefaultSurveyId()
+
+        // Retrieve surveyId directly from SharedPreferences
+        surveyId = sharedPreferences.getString("surveyId", generateDefaultSurveyId()) ?: generateDefaultSurveyId()
 
         // Find the TextView for displaying the survey identifier
         surveyIdentifierTextView = findViewById(R.id.surveyIdentifierTextView)

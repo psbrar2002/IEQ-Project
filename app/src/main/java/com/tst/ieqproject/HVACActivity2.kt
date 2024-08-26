@@ -2,13 +2,18 @@ package com.tst.ieqproject
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.tst.ieqproject.utils.FirebaseUtils
 import com.tst.ieqproject.utils.ScoreUtils2
 
 class HVACActivity2 : AppCompatActivity() {
@@ -22,7 +27,7 @@ class HVACActivity2 : AppCompatActivity() {
     private lateinit var additionalAppliancesSpinner: Spinner
     private lateinit var portableAirFilterSpinner: Spinner
     private lateinit var ieqScoreTextView2: TextView
-
+    private lateinit var surveyIdTextView: TextView
     private var hvacScore2: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +36,16 @@ class HVACActivity2 : AppCompatActivity() {
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+        surveyIdTextView = findViewById(R.id.surveyIdTextView)
 
+        val isPublicSurvey = true // Set this based on your logic
+
+        // Use a callback to ensure the survey ID is ready
+        FirebaseUtils.generateAndSaveSurveyId(this, isPublicSurvey) { surveyId ->
+            // This code runs after the survey ID is generated
+            surveyIdTextView.text = "Survey ID: $surveyId"
+            Log.d("DwellingAttributesActivity", "Survey ID displayed: $surveyId")
+        }
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
 
@@ -67,6 +81,19 @@ class HVACActivity2 : AppCompatActivity() {
         val exitButton: Button = findViewById(R.id.exitButton)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
+        }
+        val openInstructionsLink = findViewById<TextView>(R.id.openInstructionsStoreLink)
+        val content = "IEQ Survey Instructions"
+        val spannableString = SpannableString(content)
+        spannableString.setSpan(UnderlineSpan(), 0, content.length, 0)
+        openInstructionsLink.text = spannableString
+
+// If you want to set it as a clickable link, you can use:
+        openInstructionsLink.setOnClickListener {
+            val url = "https://drive.google.com/file/d/1XI4uJaBIzbrHDUG1hekpgHTL1s_HHA9A/view"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
         }
         // Restore Data if available
         restoreData()

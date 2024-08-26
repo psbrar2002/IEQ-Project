@@ -2,7 +2,12 @@ package com.tst.ieqproject.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.tst.ieqproject.R
 
 object ScoreUtils2 {
 
@@ -22,6 +27,26 @@ object ScoreUtils2 {
         // Display the IEQ Score
         ieqScoreTextView.text = "IEQ Score: %.2f%%".format(ieqScore2)
         sharedPreferences.edit().putFloat("ieqScore2", ieqScore2.toFloat()).apply()
+        // Determine the color based on the score
+        val scoreColor = when {
+            ieqScore2 >= 85 -> ContextCompat.getColor(context, R.color.colorA)
+            ieqScore2 >= 75 -> ContextCompat.getColor(context, R.color.colorB)
+            ieqScore2 >= 65 -> ContextCompat.getColor(context, R.color.colorC)
+            ieqScore2 >= 55 -> ContextCompat.getColor(context, R.color.colorD)
+            ieqScore2 >= 45 -> ContextCompat.getColor(context, R.color.colorE)
+            ieqScore2 >= 35 -> ContextCompat.getColor(context, R.color.colorF)
+            else -> ContextCompat.getColor(context, R.color.colorG)
+        }
+
+        // Create a SpannableString with the color applied to the score part
+        val ieqScoreText = "IEQ Score: "
+        val scoreText = "%.2f%%".format(ieqScore2)
+        val spannableString = SpannableString(ieqScoreText + scoreText).apply {
+            setSpan(ForegroundColorSpan(scoreColor), ieqScoreText.length, ieqScoreText.length + scoreText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        // Display the colored IEQ Score
+        ieqScoreTextView.text = spannableString
 
         // Return the calculated score
         return ieqScore2.toFloat()

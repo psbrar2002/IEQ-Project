@@ -12,6 +12,40 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- RelativeLayout to position elements at the top -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Survey ID TextView positioned at the top right -->
+            <TextView
+                android:id="@+id/surveyIdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:text="Survey ID: "
+                android:textColor="@android:color/black"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+        <!-- Hyperlink TextView for IEQ Survey Instructions -->
+        <TextView
+            android:id="@+id/openInstructionsStoreLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/surveyIdTextView"
+            android:layout_marginTop="8dp"
+            android:text="IEQ Survey Instructions"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
+            android:autoLink="web"
+            android:textSize="16sp"
+            android:linksClickable="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp" />
+
 
         <!-- Dwelling Attributes Section -->
         <androidx.cardview.widget.CardView
@@ -25,15 +59,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
-
+                android:padding="16dp"
+                android:gravity="center">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Dwelling Attributes"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
-
+                    android:textStyle="bold"
+                    android:gravity="center" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -270,13 +304,17 @@
 
 
 
+        <!-- IEQ Score -->
         <TextView
             android:id="@+id/ieqScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="IEQ Score: 0%"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textSize="18sp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginBottom="16dp"/>
 
 
         <LinearLayout
@@ -302,6 +340,8 @@
                 android:layout_weight="1"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
+
         <!-- Progress Bar at the bottom -->
         <ProgressBar
             android:id="@+id/progressBar"

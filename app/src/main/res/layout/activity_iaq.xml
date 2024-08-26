@@ -10,7 +10,39 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+        <!-- RelativeLayout to position elements at the top -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Survey ID TextView positioned at the top right -->
+            <TextView
+                android:id="@+id/surveyIdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:text="Survey ID: "
+                android:textColor="@android:color/black"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
+
+        </RelativeLayout>
+        <!-- Hyperlink TextView for IEQ Survey Instructions -->
+        <TextView
+            android:id="@+id/openInstructionsStoreLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/surveyIdTextView"
+            android:layout_marginTop="8dp"
+            android:text="IEQ Survey Instructions"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold"
+            android:autoLink="web"
+            android:textSize="16sp"
+            android:linksClickable="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp" />
         <!-- IEQ Indoor Air Quality (IAQ) - PM 2.5 Readings Header -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -33,6 +65,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
 
         <!-- Kitchen Stove Type -->
         <androidx.cardview.widget.CardView
@@ -114,6 +147,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:prompt="@string/bathroom_ventilation_prompt" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <!-- New CardView for AirCasting App Information -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This section requires the use of the AirCasting App"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/openPlayStoreLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Download AirCasting App"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textStyle="bold"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -290,21 +359,31 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- IAQ Score -->
-        <TextView
-            android:id="@+id/iaqScoreTextView"
+        <!-- Score Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IAQ Score: 0"
-            android:textSize="18sp"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/ieqScoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IEQ Score: 0%"
-            android:textSize="20sp"
-            android:layout_marginTop="16dp" />
+            <TextView
+                android:id="@+id/iaqScoreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IAQ Score: 0"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/ieqScoreTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IEQ Score: 0"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </LinearLayout>
         <!-- Navigation Buttons -->
         <LinearLayout
             android:layout_width="match_parent"

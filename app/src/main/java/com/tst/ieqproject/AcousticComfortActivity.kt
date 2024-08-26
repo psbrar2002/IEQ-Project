@@ -3,14 +3,19 @@ package com.tst.ieqproject
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.UnderlineSpan
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.tst.ieqproject.utils.FirebaseUtils
 import com.tst.ieqproject.utils.ScoreUtils
 
 class AcousticComfortActivity : AppCompatActivity() {
@@ -20,17 +25,39 @@ class AcousticComfortActivity : AppCompatActivity() {
     private lateinit var ieqScoreTextView: TextView
     private lateinit var database: DatabaseReference
     private var acousticComfortScore: Double = 0.0
-
+    private lateinit var surveyIdTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acoustic_comfort)
 
         sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        surveyIdTextView = findViewById(R.id.surveyIdTextView)
+
+        val isPublicSurvey = false // Set this based on your logic
+
+        // Use a callback to ensure the survey ID is ready
+        FirebaseUtils.generateAndSaveSurveyId(this, isPublicSurvey) { surveyId ->
+            // This code runs after the survey ID is generated
+            surveyIdTextView.text = "Survey ID: $surveyId"
+            Log.d("DwellingAttributesActivity", "Survey ID displayed: $surveyId")
+        }
         database = FirebaseDatabase.getInstance().reference
 
         acousticComfortScoreTextView = findViewById(R.id.acousticComfortScoreTextView)
         ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
+        val openInstructionsLink = findViewById<TextView>(R.id.openInstructionsStoreLink)
+        val content = "IEQ Survey Instructions"
+        val spannableString = SpannableString(content)
+        spannableString.setSpan(UnderlineSpan(), 0, content.length, 0)
+        openInstructionsLink.text = spannableString
 
+// If you want to set it as a clickable link, you can use:
+        openInstructionsLink.setOnClickListener {
+            val url = "https://drive.google.com/file/d/1XI4uJaBIzbrHDUG1hekpgHTL1s_HHA9A/view"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
         // Restore saved data
         restoreData()
         setupAcousticComfortListener()

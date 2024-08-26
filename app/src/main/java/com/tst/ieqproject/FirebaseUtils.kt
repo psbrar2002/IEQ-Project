@@ -13,6 +13,24 @@ import java.util.*
 object FirebaseUtils {
     private val database: DatabaseReference =
         FirebaseDatabase.getInstance().getReference("surveyData")
+    // New method to generate surveyId and save it early
+    // Method to generate and save survey ID
+    // Method to generate a unique surveyId and save it early
+    fun generateAndSaveSurveyId(context: Context, isPublic: Boolean, callback: (String) -> Unit) {
+        val sharedPreferences = context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
+        val existingSurveyId = sharedPreferences.getString("surveyId", null)
+
+        if (existingSurveyId == null) {
+            generateUniqueIdentifier(isPublic) { uniqueIdentifier ->
+                sharedPreferences.edit().putString("surveyId", uniqueIdentifier).apply()
+                Log.d("FirebaseUtils", "Generated and saved surveyId: $uniqueIdentifier")
+                callback(uniqueIdentifier) // Pass the uniqueIdentifier to the callback
+            }
+        } else {
+            Log.d("FirebaseUtils", "Existing surveyId found: $existingSurveyId")
+            callback(existingSurveyId) // Pass the existingSurveyId to the callback
+        }
+    }
 
     private fun generateUniqueIdentifier(isPublic: Boolean, callback: (String) -> Unit) {
         val surveyTypePrefix = if (isPublic) "pub" else "pri"
@@ -25,16 +43,18 @@ object FirebaseUtils {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     // Identifier exists, generate a new one
+                    Log.d("FirebaseUtils", "Identifier $potentialIdentifier exists, generating a new one.")
                     generateUniqueIdentifier(isPublic, callback)
                 } else {
                     // Identifier is unique
+                    Log.d("FirebaseUtils", "Identifier $potentialIdentifier is unique, using it.")
                     callback(potentialIdentifier)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FirebaseUtils", "Error checking identifier: ${error.message}")
-                // You might want to handle this differently, but for now, just return the potentialIdentifier
+                // Return the potentialIdentifier even on error, this should be handled better in production
                 callback(potentialIdentifier)
             }
         })
@@ -46,7 +66,13 @@ object FirebaseUtils {
         isPublic: Boolean,
         callback: (Boolean, String) -> Unit
     ) {
-        generateUniqueIdentifier(isPublic) { uniqueIdentifier -> // Unique identifier for each submission
+        val surveyId = sharedPreferences.getString("surveyId", null)
+        if (surveyId == null) {
+            Log.e("FirebaseUtils", "Survey ID is null, unable to submit data.")
+            callback(false, "N/A")
+            return
+        }
+
             val surveyData: Map<String, Any>
 
 
@@ -258,20 +284,20 @@ object FirebaseUtils {
             }
             Log.d("FirebaseUtils", "Submitting data: $surveyData")
 
-            database.child(uniqueIdentifier).setValue(surveyData)
+            database.child(surveyId).setValue(surveyData)
                 .addOnSuccessListener {
                     Log.d(
                         "FirebaseUtils",
-                        "Data submitted successfully to surveyData/$uniqueIdentifier"
+                        "Data submitted successfully to surveyData/$surveyId"
                     )
-                    callback(true, uniqueIdentifier)
+                    callback(true, surveyId)
                 }
                 .addOnFailureListener { exception ->
                     Log.e("FirebaseUtils", "Failed to submit data: ${exception.localizedMessage}")
-                    callback(false, uniqueIdentifier)
+                    callback(false, surveyId)
                 }
         }
     }
-}
+
 
 
