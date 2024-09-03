@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.util.Log
@@ -16,6 +17,13 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.tst.ieqproject.utils.FirebaseUtils
 import com.tst.ieqproject.utils.ScoreUtils2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.osmdroid.config.Configuration
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.CustomZoomButtonsController
+import org.osmdroid.views.MapView
 
 class BuildingAttributesActivity : AppCompatActivity() {
 
@@ -29,15 +37,17 @@ class BuildingAttributesActivity : AppCompatActivity() {
     private lateinit var gpsLocationEditText: EditText
     private lateinit var ageOfBuildingEditText: EditText
     private lateinit var dateEditText: EditText
+    private lateinit var streetIntersectionEditText: EditText
     private lateinit var timeOfDayEditText: EditText
     private lateinit var seasonSpinner: Spinner
     private lateinit var ieqScoreTextView2: TextView
     private lateinit var surveyIdTextView: TextView
-
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var mapView: MapView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_building_attributes)
-
+        Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
         surveyIdTextView = findViewById(R.id.surveyIdTextView)
@@ -50,6 +60,26 @@ class BuildingAttributesActivity : AppCompatActivity() {
             surveyIdTextView.text = "Survey ID: $surveyId"
             Log.d("DwellingAttributesActivity", "Survey ID displayed: $surveyId")
         }
+
+//        // Initialize UI components
+//        mapView = findViewById(R.id.mapView)
+//        mapView.setMultiTouchControls(true)
+//        mapView.zoomController.setVisibility(CustomZoomButtonsController.Visibility.ALWAYS)
+//
+//
+//        val mapController = mapView.controller
+//        mapController.setZoom(15.0) // Setting initial zoom to 15.0 for city view
+//        val startPoint = GeoPoint(37.8715, -122.2730) // UC Berkeley coordinates as an example
+//        mapController.setCenter(startPoint)
+//
+//        val searchBar: EditText = findViewById(R.id.searchBar)
+//        searchBar.setOnEditorActionListener { textView, actionId, keyEvent ->
+//            val query = searchBar.text.toString()
+//            if (query.isNotBlank()) {
+//                searchLocation(query)
+//            }
+//            true
+//        }
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
 
@@ -59,7 +89,7 @@ class BuildingAttributesActivity : AppCompatActivity() {
         typeOfRoomSpinner = findViewById(R.id.typeOfRoomSpinner)
         typeOfRoomOtherEditText = findViewById(R.id.typeOfRoomOtherEditText)
         squareFootageSpinner = findViewById(R.id.squareFootageSpinner)
-        gpsLocationEditText = findViewById(R.id.gpsLocationEditText)
+        gpsLocationEditText = findViewById(R.id.streetIntersectionEditText)
         ageOfBuildingEditText = findViewById(R.id.ageOfBuildingEditText)
         dateEditText = findViewById(R.id.dateEditText)
         timeOfDayEditText = findViewById(R.id.timeOfDayEditText)
@@ -106,7 +136,7 @@ class BuildingAttributesActivity : AppCompatActivity() {
 
 // If you want to set it as a clickable link, you can use:
         openInstructionsLink.setOnClickListener {
-            val url = "https://drive.google.com/file/d/1XI4uJaBIzbrHDUG1hekpgHTL1s_HHA9A/view"
+            val url = "https://drive.google.com/file/d/1PTKGWSZ3O_qd8TFKXs3WwYSBKgdVfHx0/view"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)
@@ -140,7 +170,25 @@ class BuildingAttributesActivity : AppCompatActivity() {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
+//    private fun searchLocation(query: String) {
+//        coroutineScope.launch {
+//            try {
+//                val results = NominatimAPI.search(query)
+//                if (results.isNotEmpty()) {
+//                    val firstResult = results[0]  // Assuming the first result is the most relevant
+//                    val geoPoint = GeoPoint(firstResult.latitude, firstResult.longitude)
+//                    mapView.controller.setZoom(18.0)
+//                    mapView.controller.animateTo(geoPoint)
+//                    mapView.invalidate()  // Refresh the map
+//                } else {
+//                    Toast.makeText(this@BuildingAttributesActivity, "Location not found", Toast.LENGTH_SHORT).show()
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                Toast.makeText(this@BuildingAttributesActivity, "Error searching location", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
     private fun clearAllData() {
         val editor = sharedPreferences.edit()
         editor.clear()

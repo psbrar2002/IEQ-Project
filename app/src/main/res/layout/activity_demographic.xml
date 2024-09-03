@@ -55,16 +55,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:gravity="center"> <!-- Center content horizontally and vertically -->
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Demographic Information"
+                    android:text="Demographic Information (OPTIONAL)"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center" /> <!-- Center text within the TextView -->
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
 
         <!-- Multiracial -->
         <androidx.cardview.widget.CardView

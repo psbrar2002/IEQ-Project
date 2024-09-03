@@ -2,13 +2,20 @@ package com.tst.ieqproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.firebase.database.*
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
+import org.osmdroid.util.GeoPoint
 import java.io.File
 import java.io.FileWriter
 
@@ -31,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         val exportButton: Button = findViewById(R.id.exportButton)
         val startSurveyButton2: Button = findViewById(R.id.startSurveyButton2)
 
+
         // Set up the start survey button click listener
         startSurveyButton.setOnClickListener {
             startActivity(Intent(this, DwellingAttributesActivity::class.java))
@@ -45,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set up the export button click listener
         exportButton.setOnClickListener {
-            retrieveData()
+            showPasswordDialog()
         }
     }
 
@@ -127,7 +135,29 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+    private fun showPasswordDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Enter Password")
 
+        val viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_password, findViewById(android.R.id.content), false)
+        val passwordInput = viewInflated.findViewById<EditText>(R.id.passwordEditText)
+
+        builder.setView(viewInflated)
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+            val password = passwordInput.text.toString()
+            if (password == "test") { // Replace with your actual password
+                dialog.dismiss()
+                retrieveData() // Proceed with data export
+            } else {
+                dialog.dismiss()
+                Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show()
+            }
+        }
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
+
+        builder.show()
+    }
     private fun exportDataAsCsv(data: Iterable<DataSnapshot>, isPublic: Boolean): File {
         val fileName = if (isPublic) "public_survey_data.csv" else "private_survey_data.csv"
         val file = File(getExternalFilesDir(null), fileName)
@@ -151,7 +181,7 @@ class MainActivity : AppCompatActivity() {
                 "IAQ Score", "Kitchen Presence", "Kitchen Stove Type", "Kitchen Stove Fan", "Bathroom Presence",
                 "Bathroom Ventilation Type", "Mold Presence", "PM2.5 Value", "Indoor Humidity", "Outdoor PM2.5",
                 "Outdoor Humidity", "Thermal Comfort Score", "Indoor Temp", "Outdoor Temp", "Acoustic Comfort Score",
-                "Indoor Decibel", "Outdoor Decibel"
+                "Indoor Decibel", "Outdoor Decibel","Indoor Noise Sources", "Outdoor Noise Sources"
             )
         } else {
             arrayOf(
@@ -204,7 +234,9 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("thermalComfortAttributes/outdoorTemp").value.toString(),
                 snapshot.child("acousticComfortAttributes/acousticComfortScore").value.toString(),
                 snapshot.child("acousticComfortAttributes/indoorDecibel").value.toString(),
-                snapshot.child("acousticComfortAttributes/outdoorDecibel").value.toString()
+                snapshot.child("acousticComfortAttributes/outdoorDecibel").value.toString(),
+                snapshot.child("acousticComfortAttributes/indoorNoiseSources").value.toString(),
+                snapshot.child("acousticComfortAttributes/outdoorNoiseSources").value.toString()
             )
         } else {
             arrayOf(
@@ -236,8 +268,8 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("iaqAttributes/outdoorPM25").value.toString(),
                 snapshot.child("iaqAttributes/outdoorHumidity").value.toString(),
                 snapshot.child("thermalComfortAttributes/thermalComfortScore").value.toString(),
-                snapshot.child("thermalComfortAttributes/indoorTemperature").value.toString(),
-                snapshot.child("thermalComfortAttributes/outdoorTemperature").value.toString(),
+                snapshot.child("thermalComfortAttributes/indoorTemp").value.toString(),
+                snapshot.child("thermalComfortAttributes/outdoorTemp").value.toString(),
                 snapshot.child("acousticComfortAttributes/acousticComfortScore").value.toString(),
                 snapshot.child("acousticComfortAttributes/indoorDecibel").value.toString(),
                 snapshot.child("acousticComfortAttributes/outdoorDecibel").value.toString(),

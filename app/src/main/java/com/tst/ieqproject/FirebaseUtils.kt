@@ -152,6 +152,14 @@ object FirebaseUtils {
                             ?: "N/A"),
                         "outdoorDecibel" to (sharedPreferences.getString("outdoorDecibel2", "N/A")
                             ?: "N/A"),
+                        "indoorNoiseSources" to (sharedPreferences.getString(
+                            "indoorNoiseSources2",
+                            "N/A"
+                        ) ?: "N/A"),
+                        "outdoorNoiseSources" to (sharedPreferences.getString(
+                            "outdoorNoiseSources2",
+                            "N/A"
+                        ) ?: "N/A"),
                         "acousticComfortScore" to sharedPreferences.getFloat(
                             "acousticComfortScore2",
                             0f

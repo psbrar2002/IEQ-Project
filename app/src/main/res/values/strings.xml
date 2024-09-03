@@ -47,7 +47,7 @@
     <string name="date_prompt">Enter date (mm/dd/yyyy)</string>
 
     <!-- Nearby Street Intersection -->
-    <string name="street_intersection_prompt">Enter nearby street intersection</string>
+    <string name="street_intersection_prompt">Enter nearby street intersection (two streets)</string>
 
     <!-- Age of Building -->
     <string name="building_age_prompt">Enter age of building if you dont know leave blank</string>

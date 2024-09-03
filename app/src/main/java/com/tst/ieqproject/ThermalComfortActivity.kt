@@ -61,7 +61,7 @@ class ThermalComfortActivity : AppCompatActivity() {
 
 // If you want to set it as a clickable link, you can use:
         openInstructionsLink.setOnClickListener {
-            val url = "https://drive.google.com/file/d/1XI4uJaBIzbrHDUG1hekpgHTL1s_HHA9A/view"
+            val url = "https://drive.google.com/file/d/1PTKGWSZ3O_qd8TFKXs3WwYSBKgdVfHx0/view"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)

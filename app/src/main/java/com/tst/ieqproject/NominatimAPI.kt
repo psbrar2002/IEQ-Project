@@ -1,27 +1,25 @@
-package com.tst.ieqproject
-
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
-import java.io.IOException
+// NominatimAPI.kt
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.osmdroid.util.GeoPoint
+import java.net.URL
 
 object NominatimAPI {
-    private val client = OkHttpClient()
-    private const val NOMINATIM_URL = "https://nominatim.openstreetmap.org/search?"
+    suspend fun search(query: String): List<GeoPoint> {
+        return withContext(Dispatchers.IO) {
+            val url = "https://nominatim.openstreetmap.org/search?q=${query}&format=json"
+            val response = URL(url).readText()
+            val jsonArray = JSONArray(response)
 
-    data class Place(
-        @SerializedName("display_name") val displayName: String
-    )
-
-    @Throws(IOException::class)
-    fun search(query: String): List<Place> {
-        val url = "${NOMINATIM_URL}q=${query}&format=json&addressdetails=1"
-        val request = Request.Builder().url(url).build()
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            val body = response.body?.string() ?: return emptyList()
-            return Gson().fromJson(body, Array<Place>::class.java).toList()
+            val results = mutableListOf<GeoPoint>()
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val lat = jsonObject.getDouble("lat")
+                val lon = jsonObject.getDouble("lon")
+                results.add(GeoPoint(lat, lon))
+            }
+            results
         }
     }
 }

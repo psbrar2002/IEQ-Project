@@ -94,7 +94,34 @@
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <!-- List the sources of noise you hear indoors -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="List the sources of noise you hear indoors"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/indoorNoiseSourcesEditText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter sources of noise indoors"
+                    android:inputType="text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
         <!-- Outdoor Decibel Reading -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -123,7 +150,34 @@
                     android:inputType="numberDecimal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <!-- List the sources of noise you hear outdoors -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="List the sources of noise you hear outdoors"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/outdoorNoiseSourcesEditText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter sources of noise outdoors"
+                    android:inputType="text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
         <!-- Acoustic Comfort Score -->
         <TextView
             android:id="@+id/acousticComfortScoreTextView2"

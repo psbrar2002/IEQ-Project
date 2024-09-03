@@ -170,7 +170,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- GPS Location Section -->
+        <!-- Nearby Street Intersection Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -187,15 +187,34 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GPS Location (Lat,Long) or Address of nearest cross street"
+                    android:text="Nearby Street Intersection (two streets)"
                     android:textStyle="bold" />
 
+                <!-- Search bar for location search -->
+
+
+                <ListView
+                    android:id="@+id/suggestionsListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
                 <EditText
-                    android:id="@+id/gpsLocationEditText"
+                    android:id="@+id/streetIntersectionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/gps_location_prompt"
+                    android:hint="@string/street_intersection_prompt"
                     android:inputType="text" />
+<!--                <EditText-->
+<!--                    android:id="@+id/searchBar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Search for a location"-->
+<!--                    android:inputType="text" />-->
+<!--                <org.osmdroid.views.MapView-->
+<!--                    android:id="@+id/mapView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="500dp" /> &lt;!&ndash; Setting a fixed height for better visibility initially &ndash;&gt;-->
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

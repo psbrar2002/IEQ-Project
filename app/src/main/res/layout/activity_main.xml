@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Private Building Survey"
+                android:text="Start Private Building Survey (e.g., homes, apartments, private residences)"
                 android:layout_marginEnd="8dp" />
 
             <Button
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Start Public Building Survey"
+                android:text="Start Public Building Survey (e.g., schools, libraries, non-residential spaces)"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 

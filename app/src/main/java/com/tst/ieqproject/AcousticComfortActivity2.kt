@@ -24,6 +24,9 @@ class AcousticComfortActivity2 : AppCompatActivity() {
     private lateinit var indoorDecibelEditText: EditText
     private lateinit var outdoorDecibelEditText: EditText
     private lateinit var surveyIdTextView: TextView
+    private lateinit var indoorNoiseSourcesEditText: EditText
+    private lateinit var outdoorNoiseSourcesEditText: EditText
+
     private var acousticComfortScore2: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +50,8 @@ class AcousticComfortActivity2 : AppCompatActivity() {
         ieqScoreTextView = findViewById(R.id.ieqScoreTextView2)
         indoorDecibelEditText = findViewById(R.id.indoorDecibelEditText2)
         outdoorDecibelEditText = findViewById(R.id.outdoorDecibelEditText2)
-
+        indoorNoiseSourcesEditText = findViewById(R.id.indoorNoiseSourcesEditText2)
+        outdoorNoiseSourcesEditText = findViewById(R.id.outdoorNoiseSourcesEditText2)
         // Setup TextWatchers for the EditTexts
         indoorDecibelEditText.addTextChangedListener(decibelTextWatcher)
         outdoorDecibelEditText.addTextChangedListener(decibelTextWatcher)
@@ -77,7 +81,7 @@ class AcousticComfortActivity2 : AppCompatActivity() {
 
 // If you want to set it as a clickable link, you can use:
         openInstructionsLink.setOnClickListener {
-            val url = "https://drive.google.com/file/d/1XI4uJaBIzbrHDUG1hekpgHTL1s_HHA9A/view"
+            val url = "https://drive.google.com/file/d/1PTKGWSZ3O_qd8TFKXs3WwYSBKgdVfHx0/view"
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)
@@ -125,6 +129,8 @@ class AcousticComfortActivity2 : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("indoorDecibel2", indoorDecibelEditText.text.toString())
         editor.putString("outdoorDecibel2", outdoorDecibelEditText.text.toString())
+        editor.putString("indoorNoiseSources2", indoorNoiseSourcesEditText.text.toString())
+        editor.putString("outdoorNoiseSources2", outdoorNoiseSourcesEditText.text.toString())
         editor.putFloat("acousticComfortScore2", acousticComfortScore2.toFloat())
         editor.apply()
 
@@ -136,7 +142,8 @@ class AcousticComfortActivity2 : AppCompatActivity() {
         // Retrieve values safely with appropriate type casts
         indoorDecibelEditText.setText(sharedPreferences.getString("indoorDecibel2", "") ?: "")
         outdoorDecibelEditText.setText(sharedPreferences.getString("outdoorDecibel2", "") ?: "")
-
+        indoorNoiseSourcesEditText.setText(sharedPreferences.getString("indoorNoiseSources2", ""))
+        outdoorNoiseSourcesEditText.setText(sharedPreferences.getString("outdoorNoiseSources2", ""))
         // If you've stored any float value, retrieve it with getFloat
         val acousticComfortScore = sharedPreferences.getFloat("acousticComfortScore2", 0f)
         acousticComfortScoreTextView.text = String.format("Acoustic Comfort Score: %.1f", acousticComfortScore.toDouble())
