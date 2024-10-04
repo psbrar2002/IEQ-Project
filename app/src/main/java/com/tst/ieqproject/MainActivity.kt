@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.firebase.database.*
+import com.tst.ieqproject.Secrets.Companion.PASSWORD
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import org.osmdroid.util.GeoPoint
@@ -146,7 +147,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             val password = passwordInput.text.toString()
-            if (password == "test") { // Replace with your actual password
+            if (password == PASSWORD) {
                 dialog.dismiss()
                 retrieveData() // Proceed with data export
             } else {
@@ -176,7 +177,7 @@ class MainActivity : AppCompatActivity() {
         return if (isPublic) {
             arrayOf(
                 "ID", "IEQ Score", "Building Type", "Type of Room", "Square Footage", "GPS Location",
-                "Age of Building", "Date", "Time of Day", "Season", "HVAC Score", "Air Conditioning",
+                "Age of Building", "Date", "Time of Day", "City", "Season", "HVAC Score", "Air Conditioning",
                 "Type of Air Conditioning", "Heating Type", "Additional Appliances", "Portable Air Filter",
                 "IAQ Score", "Kitchen Presence", "Kitchen Stove Type", "Kitchen Stove Fan", "Bathroom Presence",
                 "Bathroom Ventilation Type", "Mold Presence", "PM2.5 Value", "Indoor Humidity", "Outdoor PM2.5",
@@ -186,7 +187,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             arrayOf(
                 "ID", "IEQ Score", "Home Type", "Section 8", "Oakland Housing", "Number of People",
-                "Square Footage", "Date", "Street Intersection", "Building Age", "HVAC Score", "Has Air Conditioning",
+                "Square Footage", "Date", "Time of Day", "City","Street Intersection", "Building Age", "HVAC Score", "Has Air Conditioning",
                 "Air Conditioning Works", "Type of Air Conditioning", "Heating Type", "Additional Appliances",
                 "Has Portable Air Filter", "IAQ Score", "Kitchen Stove Type", "Kitchen Stove Fan",
                 "Bathroom Ventilation", "Mold Present", "Living Room Before Cooking", "Living Room After Cooking",
@@ -211,6 +212,7 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("buildingAttributes/ageOfBuilding").value.toString(),
                 snapshot.child("buildingAttributes/date").value.toString(),
                 snapshot.child("buildingAttributes/timeOfDay").value.toString(),
+                snapshot.child("buildingAttributes/city").value.toString(), // Added City
                 snapshot.child("buildingAttributes/season").value.toString(),
                 snapshot.child("hvacAttributes/hvacScore").value.toString(),
                 snapshot.child("hvacAttributes/airConditioning").value.toString(),
@@ -248,6 +250,8 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("dwellingAttributes/numPeople").value.toString(),
                 snapshot.child("dwellingAttributes/squareFootage").value.toString(),
                 snapshot.child("dwellingAttributes/date").value.toString(),
+                snapshot.child("dwellingAttributes/timeOfDay").value.toString(), // Added Time of Day
+                snapshot.child("dwellingAttributes/city").value.toString(), // Added City
                 snapshot.child("dwellingAttributes/streetIntersection").value.toString(),
                 snapshot.child("dwellingAttributes/buildingAge").value.toString(),
                 snapshot.child("hvacAttributes/hvacScore").value.toString(),

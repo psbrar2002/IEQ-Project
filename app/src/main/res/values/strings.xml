@@ -48,7 +48,7 @@
 
     <!-- Nearby Street Intersection -->
     <string name="street_intersection_prompt">Enter nearby street intersection (two streets)</string>
-
+    <string name="city_prompt">City</string>
     <!-- Age of Building -->
     <string name="building_age_prompt">Enter age of building if you dont know leave blank</string>
 
@@ -202,6 +202,7 @@
     <string name="indoor_humidity_prompt">Enter Indoor Humidity</string>
 
     <string name="mold_prompt">Is mold present?</string>
+    <string name="info_icon_desc">test\n</string>
 
     <!-- Yes/No Options -->
 

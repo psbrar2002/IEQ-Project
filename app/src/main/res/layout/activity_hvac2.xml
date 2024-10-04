@@ -1,19 +1,38 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HVACActivity2">
 
+    <!-- Fixed Header Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
-        <!-- RelativeLayout to position elements at the top -->
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <!-- Smaller Exit Button positioned at the top left -->
+            <ImageButton
+                android:id="@+id/exitButtonWithIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/exit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@android:color/holo_red_dark" />
+
             <!-- Survey ID TextView positioned at the top right -->
             <TextView
                 android:id="@+id/surveyIdTextView"
@@ -26,14 +45,13 @@
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
-
         </RelativeLayout>
+
         <!-- Hyperlink TextView for IEQ Survey Instructions -->
         <TextView
             android:id="@+id/openInstructionsStoreLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/surveyIdTextView"
             android:layout_marginTop="8dp"
             android:text="IEQ Survey Instructions"
             android:textColor="@android:color/holo_blue_dark"
@@ -68,236 +86,247 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Air Conditioning Question -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Is there Air Conditioning?"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/airConditioningSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/yes_no_array" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Type of Air Conditioning Question -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Type of Air Conditioning"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/typeOfAirConditioningSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/air_conditioning_type_array" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Type of Heating Question -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="What type of working Heating does the building have?"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/heatingTypeSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/heating_type_array" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Additional Appliances Question -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Do you have any appliances like window air conditioners?"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/additionalAppliancesSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/yes_no_array" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Portable Air Filter Question -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Is there a portable air filter in the space?"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/portableAirFilterSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/yes_no_array" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- HVAC and IEQ Scores Side by Side -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="16dp">
-
-            <TextView
-                android:id="@+id/hvacScoreTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HVAC Score: 0"
-                android:textSize="18sp"
-                android:layout_marginEnd="16dp"/>
-
-            <TextView
-                android:id="@+id/ieqScoreTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="IEQ Score: 0%"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-        </LinearLayout>
-
-        <!-- Navigation Buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_gravity="center_horizontal">
-
-            <Button
-                android:id="@+id/exitButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Exit"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="@android:color/holo_red_dark" />
-
-            <Button
-                android:id="@+id/backButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Back"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/nextButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp" />
-
-        </LinearLayout>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progress="40"
-            android:max="100"
-            />
-
-        <!-- Page Counter at the bottom -->
-        <TextView
-            android:id="@+id/pageCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:padding="8dp"
-            android:text="Page 2 of 5"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
-</ScrollView>
+
+    <!-- Scrollable Content Section -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Air Conditioning Question -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Is there Air Conditioning?"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/airConditioningSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/yes_no_array" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Type of Air Conditioning Question -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Type of Air Conditioning"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/typeOfAirConditioningSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/air_conditioning_type_array" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Type of Heating Question -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="What type of working Heating does the building have?"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/heatingTypeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/heating_type_array" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Additional Appliances Question -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you have any appliances like window air conditioners?"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/additionalAppliancesSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/yes_no_array" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Portable Air Filter Question -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Is there a portable air filter in the space?"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/portableAirFilterSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/yes_no_array" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- HVAC and IEQ Scores Side by Side -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/hvacScoreTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HVAC Score: 0"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/ieqScoreTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IEQ Score: 0%"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <!-- Navigation Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp"
+                android:layout_gravity="center_horizontal">
+
+
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Back"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progress="40"
+                android:max="100" />
+
+            <!-- Page Counter at the bottom -->
+            <TextView
+                android:id="@+id/pageCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp"
+                android:text="Page 2 of 5"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

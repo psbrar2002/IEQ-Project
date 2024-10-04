@@ -38,7 +38,7 @@
         <activity android:name=".ThermalComfortActivity2"/>
         <activity android:name=".AcousticComfortActivity2"/>
         <activity android:name=".SubmissionActivity"/>
-        <activity android:name=".PdfViewerActivity" />
+<!--        <activity android:name=".PdfViewerActivity" />-->
 
         <provider
             android:name="androidx.core.content.FileProvider"

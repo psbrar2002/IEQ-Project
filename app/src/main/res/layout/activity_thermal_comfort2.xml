@@ -1,19 +1,36 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ThermalComfortActivity2">
 
+    <!-- Fixed Header Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
         <!-- RelativeLayout to position elements at the top -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <!-- Exit Button positioned at the top left -->
+            <ImageButton
+                android:id="@+id/exitButtonWithIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/exit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@android:color/holo_red_dark" />
+
             <!-- Survey ID TextView positioned at the top right -->
             <TextView
                 android:id="@+id/surveyIdTextView"
@@ -26,23 +43,22 @@
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
-
         </RelativeLayout>
+
         <!-- Hyperlink TextView for IEQ Survey Instructions -->
         <TextView
             android:id="@+id/openInstructionsStoreLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/surveyIdTextView"
             android:layout_marginTop="8dp"
             android:text="IEQ Survey Instructions"
             android:textColor="@android:color/holo_blue_dark"
             android:textStyle="bold"
             android:autoLink="web"
             android:textSize="16sp"
-            android:linksClickable="true"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp" />
+
         <!-- Title Section -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -66,144 +82,151 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Indoor Temperature -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+    <!-- Scrollable Content Section -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Indoor Temperature (degrees Fahrenheit - add number only)"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/indoorTempEditText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter indoor temperature"
-                    android:inputType="numberDecimal" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Outdoor Temperature -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Outdoor Temperature (degrees Fahrenheit - add number only)"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/outdoorTempEditText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter outdoor temperature"
-                    android:inputType="numberDecimal" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Thermal Comfort Score -->
-        <TextView
-            android:id="@+id/thermalComfortScoreTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thermal Comfort Score: 0.0"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center_horizontal"/>
-
-        <!-- IEQ Score -->
-        <TextView
-            android:id="@+id/ieqScoreTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IEQ Score: 0.0"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center_horizontal"/>
-
-        <!-- Navigation Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_gravity="center_horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <Button
-                android:id="@+id/exitButton"
-                android:layout_width="0dp"
+            <!-- Indoor Temperature -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Exit"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="@android:color/holo_red_dark" />
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-            <Button
-                android:id="@+id/backButton"
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indoor Temperature (degrees Fahrenheit - add number only)"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/indoorTempEditText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter indoor temperature"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Outdoor Temperature -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Back"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-            <Button
-                android:id="@+id/nextButton"
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outdoor Temperature (degrees Fahrenheit - add number only)"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/outdoorTempEditText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter outdoor temperature"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Thermal Comfort Score -->
+            <TextView
+                android:id="@+id/thermalComfortScoreTextView2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp" />
+                android:text="Thermal Comfort Score: 0.0"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_horizontal"/>
 
+            <!-- IEQ Score -->
+            <TextView
+                android:id="@+id/ieqScoreTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IEQ Score: 0.0"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <!-- Navigation Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp"
+                android:layout_gravity="center_horizontal">
+
+
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Back"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progress="80"
+                android:max="100" />
+
+            <!-- Page Counter at the bottom -->
+            <TextView
+                android:id="@+id/pageCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Page 4 of 5"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progress="80"
-            android:max="100"
-            />
-
-        <!-- Page Counter at the bottom -->
-        <TextView
-            android:id="@+id/pageCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:padding="8dp"
-            android:text="Page 4 of 5"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

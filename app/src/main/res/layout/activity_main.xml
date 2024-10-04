@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -49,23 +50,40 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/startSurveyButton"
                 android:layout_width="0dp"
+                app:cornerRadius="8dp"
+                app:iconPadding="8dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Private Building Survey (e.g., homes, apartments, private residences)"
                 android:layout_marginEnd="8dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/startSurveyButton2"
                 android:layout_width="0dp"
+                app:cornerRadius="8dp"
+                app:iconPadding="8dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Public Building Survey (e.g., schools, libraries, non-residential spaces)"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/exportButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EXPORT DATA"
+            android:padding="16dp"
+            app:cornerRadius="8dp"
+            app:iconPadding="8dp"
+            android:textColor="@android:color/white"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_gravity="center"/>
         <TextView
             android:id="@+id/dataSizeTextView"
             android:layout_width="wrap_content"
@@ -74,12 +92,5 @@
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
 
-        <Button
-            android:id="@+id/exportButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Export Data"
-            android:layout_gravity="center"
-            />
     </LinearLayout>
 </ScrollView>

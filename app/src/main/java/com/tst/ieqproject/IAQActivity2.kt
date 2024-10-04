@@ -92,7 +92,7 @@ class IAQActivity2 : AppCompatActivity() {
             finish()
         }
 
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }

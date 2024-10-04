@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
 import java.util.*
 
 object FirebaseUtils {
@@ -93,6 +94,7 @@ object FirebaseUtils {
                             ?: "N/A"),
                         "date" to (sharedPreferences.getString("date2", "N/A") ?: "N/A"),
                         "timeOfDay" to (sharedPreferences.getString("timeOfDay2", "N/A") ?: "N/A"),
+                        "city" to (sharedPreferences.getString("city", "N/A") ?: "N/A"),
                         "season" to (sharedPreferences.getString("season2", "N/A") ?: "N/A")
                     ),
                     "hvacAttributes" to mapOf(
@@ -182,6 +184,8 @@ object FirebaseUtils {
                         "squareFootage" to (sharedPreferences.getString("squareFootage", "N/A")
                             ?: "N/A"),
                         "date" to (sharedPreferences.getString("date", "N/A") ?: "N/A"),
+                        "timeOfDay" to (sharedPreferences.getString("timeOfDay", "N/A") ?: "N/A"), // Add Time of Day
+                        "city" to (sharedPreferences.getString("city", "N/A") ?: "N/A"), // Add City
                         "streetIntersection" to (sharedPreferences.getString(
                             "streetIntersection",
                             "N/A"

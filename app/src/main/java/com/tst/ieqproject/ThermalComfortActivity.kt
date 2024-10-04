@@ -175,7 +175,7 @@ class ThermalComfortActivity : AppCompatActivity() {
             val intent = Intent(this, AcousticComfortActivity::class.java)
             startActivity(intent)
         }
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)     
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }

@@ -14,10 +14,18 @@ android {
         applicationId = "com.tst.ieqproject"
         minSdk = 24
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.5"
+        versionCode = 7
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:/Users/PSB/Documents/mykeystore/keystore1.jks")
+            storePassword = "Brar1234"
+            keyAlias = "key0"
+            keyPassword = "Brar1234"
+        }
     }
 
     buildTypes {
@@ -44,10 +52,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.2")
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation ("org.apache.commons:commons-csv:1.9.0")
-
-//    implementation ("com.github.barteksc:android-pdf-viewer:2.0.3")
     implementation ("org.osmdroid:osmdroid-android:6.1.10")
-
+    implementation ("com.google.android.material:material:1.13.0-alpha06")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
@@ -55,7 +61,6 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
-//    implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation ("com.google.android.material:material:1.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

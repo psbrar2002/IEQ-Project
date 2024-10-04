@@ -1,35 +1,40 @@
 package com.tst.ieqproject
-
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Rect
 import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.preference.PreferenceManager
-import android.text.Editable
 import android.text.SpannableString
-import android.text.TextWatcher
 import android.text.style.UnderlineSpan
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.PopupWindow
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.tst.ieqproject.utils.FirebaseUtils
 import com.tst.ieqproject.utils.ScoreUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+
 
 class DwellingAttributesActivity : AppCompatActivity() {
 
@@ -54,7 +59,12 @@ class DwellingAttributesActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)
         surveyIdTextView = findViewById(R.id.surveyIdTextView)
 
+
+
         val isPublicSurvey = false // Set this based on your logic
+
+
+        // Set up CirclePageIndicator with the ViewPager
 
         // Use a callback to ensure the survey ID is ready
         FirebaseUtils.generateAndSaveSurveyId(this, isPublicSurvey) { surveyId ->
@@ -99,6 +109,7 @@ class DwellingAttributesActivity : AppCompatActivity() {
         // Add listener for street intersection suggestions
 
 
+
         // Initialize the navigation button to HVACActivity
         val nextButton: Button = findViewById(R.id.hvacButton)
         nextButton.setOnClickListener {
@@ -126,6 +137,71 @@ class DwellingAttributesActivity : AppCompatActivity() {
             intent.data = Uri.parse(url)
             startActivity(intent)
         }
+        val accessMapLink = findViewById<TextView>(R.id.accessMapLink)
+        accessMapLink.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps"))
+            startActivity(intent)
+        }
+        val infoButton: ImageButton = findViewById(R.id.infoButton)
+//        TooltipCompat.setTooltipText(infoButton, "This is some information about the nearby street intersection.")
+// Set the OnClickListener for click action
+
+        infoButton.setOnClickListener {
+            // Inflate the custom layout for the popup
+            val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView = inflater.inflate(R.layout.popup_info_layout, null)
+
+            // Create the PopupWindow
+            val popupWindow = PopupWindow(
+                popupView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+            )
+
+            // Measure the popup view dimensions
+            popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            val popupHeight = popupView.measuredHeight
+            val popupWidth = popupView.measuredWidth
+
+            // Get the location of the button on the screen
+            val location = IntArray(2)
+            infoButton.getLocationOnScreen(location)
+            val buttonX = location[0]
+            val buttonY = location[1]
+
+            // Get screen dimensions
+            val displayMetrics = resources.displayMetrics
+            val screenHeight = displayMetrics.heightPixels
+            val screenWidth = displayMetrics.widthPixels
+
+            // Adjust xOffset to be centered over the button
+            var xOffset = buttonX + (infoButton.width / 2) - (popupWidth / 2)
+            var yOffset = buttonY - popupHeight - 10 // Always place above the button with 10 pixels margin
+
+            // Ensure popup stays within screen boundaries horizontally
+            if (xOffset < 0) {
+                xOffset = 10 // Align with some margin from the left edge if it goes out of screen
+            } else if (xOffset + popupWidth > screenWidth) {
+                xOffset = screenWidth - popupWidth - 10 // Align with some margin from the right edge if it goes out of screen
+            }
+
+            // Ensure popup stays within screen boundaries vertically
+            if (yOffset < 0) {
+                // If there is not enough space above, place it below the button instead
+                yOffset = buttonY + infoButton.height + 10 // 10 pixels margin below the button
+            }
+
+            // Show the PopupWindow at the calculated position
+            popupWindow.showAtLocation(infoButton, Gravity.NO_GRAVITY, xOffset, yOffset)
+
+            // Dismiss the popup when the user interacts with it
+            popupView.setOnClickListener {
+                popupWindow.dismiss()
+            }
+        }
+
+
 
     }
 //        val content = "IEQ Survey Instructions"
@@ -234,6 +310,8 @@ class DwellingAttributesActivity : AppCompatActivity() {
         editor.putString("squareFootage", findViewById<Spinner>(R.id.squareFootageSpinner).selectedItem.toString())
         editor.putString("date", findViewById<EditText>(R.id.dateEditText).text.toString())
         editor.putString("streetIntersection", streetIntersectionEditText.text.toString())
+        editor.putString("timeOfDay", findViewById<EditText>(R.id.timeOfDayEditText).text.toString()) // New addition for Time of Day
+        editor.putString("city", findViewById<EditText>(R.id.cityEditText).text.toString()) // New addition for City
         editor.putString("buildingAge", findViewById<EditText>(R.id.buildingAgeEditText).text.toString())
         editor.apply()
     }
@@ -246,6 +324,8 @@ class DwellingAttributesActivity : AppCompatActivity() {
         findViewById<Spinner>(R.id.squareFootageSpinner).setSelection(getSpinnerIndex(R.id.squareFootageSpinner, sharedPreferences.getString("squareFootage", "")!!))
         findViewById<EditText>(R.id.dateEditText).setText(sharedPreferences.getString("date", ""))
         streetIntersectionEditText.setText(sharedPreferences.getString("streetIntersection", ""))
+        findViewById<EditText>(R.id.timeOfDayEditText).setText(sharedPreferences.getString("timeOfDay", "")) // Restore Time of Day
+        findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
         findViewById<EditText>(R.id.buildingAgeEditText).setText(sharedPreferences.getString("buildingAge", ""))
         updateIEQScore()
     }

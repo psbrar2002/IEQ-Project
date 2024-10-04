@@ -116,11 +116,15 @@ class BuildingAttributesActivity : AppCompatActivity() {
         }
 
         // Setup Exit Button
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }
-
+        val accessMapLink = findViewById<TextView>(R.id.accessMapLink)
+        accessMapLink.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps"))
+            startActivity(intent)
+        }
         // Setup Next Button
         val nextButton: Button = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
@@ -220,6 +224,7 @@ class BuildingAttributesActivity : AppCompatActivity() {
         editor.putString("date2", dateEditText.text.toString())
         editor.putString("timeOfDay2", timeOfDayEditText.text.toString())
         editor.putString("season2", seasonSpinner.selectedItem.toString())
+        editor.putString("city", findViewById<EditText>(R.id.cityEditText).text.toString()) // New addition for City
         editor.apply()
     }
 
@@ -254,7 +259,7 @@ class BuildingAttributesActivity : AppCompatActivity() {
         dateEditText.setText(sharedPreferences.getString("date2", ""))
         timeOfDayEditText.setText(sharedPreferences.getString("timeOfDay2", ""))
         seasonSpinner.setSelection(getSpinnerIndex(R.id.seasonSpinner, sharedPreferences.getString("season2", "")!!))
-
+        findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
         updateIEQScore2()
     }
 

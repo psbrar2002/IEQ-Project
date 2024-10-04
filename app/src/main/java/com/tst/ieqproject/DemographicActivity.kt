@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -61,7 +62,7 @@ class DemographicActivity : AppCompatActivity() {
             showSubmitConfirmationDialog()
         }
 
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }

@@ -69,7 +69,7 @@ class AcousticComfortActivity2 : AppCompatActivity() {
             finish()  // Navigate back to the previous activity
         }
 
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }

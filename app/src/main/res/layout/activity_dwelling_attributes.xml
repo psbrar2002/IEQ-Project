@@ -15,11 +15,13 @@
         android:padding="16dp">
 
         <!-- RelativeLayout to position elements at the top -->
+        <!-- RelativeLayout to position elements at the top -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
 
-            <!-- Smaller Exit Button positioned at the top left -->
+            <!-- Exit Button positioned at the top left -->
             <ImageButton
                 android:id="@+id/exitButtonWithIcon"
                 android:layout_width="40dp"
@@ -28,11 +30,33 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:backgroundTint="@android:color/holo_red_dark"/>
+                android:backgroundTint="@android:color/holo_red_dark" />
+
+            <!-- LinearLayout to hold IEQ Score and HVAC Score -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+                <!-- IEQ Score -->
+                <TextView
+                    android:id="@+id/ieqScoreTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IEQ Score: 0%"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
 
             <!-- Survey ID TextView positioned at the top right -->
             <TextView
@@ -40,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:text="Survey ID: "
                 android:textColor="@android:color/black"
                 android:textSize="10sp"
@@ -99,6 +123,136 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
+
+            <!-- Date Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date (mm/dd/yyyy)"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/dateEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/date_prompt"
+                        android:inputType="date" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time of Day, including AM/PM"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/timeOfDayEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/time_of_day_prompt"
+                        android:inputType="time" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <!-- Nearby Street Intersection Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Enter your city field -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enter your City"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp" />
+
+                    <EditText
+                        android:id="@+id/cityEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/city_prompt"
+                        android:inputType="text" />
+
+                    <!-- Horizontal layout for Nearby Street Intersection and Map link -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start">
+
+                        <!-- Nearby Street Intersection Text -->
+                        <TextView
+                            android:id="@+id/streetIntersectionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nearby Street Intersection (two streets)"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:id="@+id/accessMapLink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Map"
+                            android:textColor="@android:color/holo_blue_dark"
+                            android:textStyle="bold"
+                            android:autoLink="web"
+                            android:linksClickable="true"
+                            android:layout_toRightOf="@id/streetIntersectionLabel"
+                            android:layout_alignBaseline="@id/streetIntersectionLabel"
+                            android:layout_marginStart="10dp" />
+
+                        <ImageButton
+                        android:id="@+id/infoButton"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/info_icon"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_toRightOf="@id/accessMapLink"
+                        android:layout_alignBaseline="@id/accessMapLink"
+                        android:layout_marginStart="10dp"
+                        android:scaleType="fitCenter" />
+
+                    </LinearLayout>
+
+                    <!-- Search bar for location search -->
+                    <EditText
+                        android:id="@+id/streetIntersectionEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/street_intersection_prompt"
+                        android:inputType="text"
+                        android:layout_marginTop="8dp"
+                        android:layout_below="@id/streetIntersectionLabel"
+                        android:layout_alignStart="@id/streetIntersectionLabel"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
 
 
 
@@ -242,69 +396,9 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Date Section -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date (mm/dd/yyyy)"
-                        android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/dateEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/date_prompt"
-                        android:inputType="date" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Nearby Street Intersection Section -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nearby Street Intersection (two streets)"
-                        android:textStyle="bold" />
-
-                    <!-- Search bar for location search -->
-                    <ListView
-                        android:id="@+id/suggestionsListView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <EditText
-                        android:id="@+id/streetIntersectionEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/street_intersection_prompt"
-                        android:inputType="text" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
             <!-- Age of Building Section -->
             <androidx.cardview.widget.CardView
@@ -332,20 +426,44 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/building_age_prompt"
                         android:inputType="number" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- IEQ Score -->
-            <TextView
-                android:id="@+id/ieqScoreTextView"
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="IEQ Score: 0%"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <!-- Progress Bar -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="8dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progress="16"
+                    android:max="100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pageCounter"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <!-- Page Counter TextView -->
+                <TextView
+                    android:id="@+id/pageCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 of 6"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- Navigation Button -->
             <LinearLayout
@@ -356,37 +474,16 @@
 
                 <Button
                     android:id="@+id/hvacButton"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Next"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp" />
+
             </LinearLayout>
 
-            <!-- Progress Bar at the bottom -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:progress="16"
-                android:max="100" />
 
-            <!-- Page Counter at the bottom -->
-            <TextView
-                android:id="@+id/pageCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:padding="8dp"
-                android:text="Page 1 of 6"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:layout_gravity="center_horizontal" />
+
 
         </LinearLayout>
     </ScrollView>

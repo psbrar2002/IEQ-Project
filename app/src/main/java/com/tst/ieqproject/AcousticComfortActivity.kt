@@ -170,7 +170,7 @@ class AcousticComfortActivity : AppCompatActivity() {
             val intent = Intent(this, DemographicActivity::class.java)
             startActivity(intent)
         }
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }

@@ -78,7 +78,7 @@ class HVACActivity2 : AppCompatActivity() {
             saveDataLocally()
             finish()  // Navigate back to the previous activity
         }
-        val exitButton: Button = findViewById(R.id.exitButton)
+        val exitButton: ImageButton = findViewById(R.id.exitButtonWithIcon)
         exitButton.setOnClickListener {
             showExitConfirmationDialog()
         }
