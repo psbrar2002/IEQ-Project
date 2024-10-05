@@ -15,9 +15,11 @@
         android:padding="16dp">
 
         <!-- RelativeLayout to position elements at the top -->
+        <!-- RelativeLayout to position elements at the top -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
 
             <!-- Exit Button positioned at the top left -->
             <ImageButton
@@ -28,8 +30,41 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:backgroundTint="@android:color/holo_red_dark" />
+
+            <!-- LinearLayout to hold IEQ Score and HVAC Score -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+                <!-- IEQ Score -->
+                <TextView
+                    android:id="@+id/ieqScoreTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IEQ Score: 0%"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+                <!-- IAQ Score positioned below IEQ Score -->
+                <TextView
+                    android:id="@+id/acousticComfortScoreTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IAQ Score: 0"
+                    android:textSize="18sp"
+                    android:layout_marginTop="4dp" /> <!-- Add margin for spacing -->
+
+            </LinearLayout>
 
             <!-- Survey ID TextView positioned at the top right -->
             <TextView
@@ -37,13 +72,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:text="Survey ID: "
                 android:textColor="@android:color/black"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-        </RelativeLayout>
 
+        </RelativeLayout>
         <!-- Hyperlink TextView for IEQ Survey Instructions -->
         <TextView
             android:id="@+id/openInstructionsStoreLink"
@@ -211,87 +246,69 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Acoustic Comfort Score -->
-            <TextView
-                android:id="@+id/acousticComfortScoreTextView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Acoustic Comfort Score: 0.0"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"
-                android:layout_gravity="center_horizontal"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
-            <!-- IEQ Score -->
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progress="100"
+                android:max="100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/pageCounter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <!-- Page Counter TextView -->
             <TextView
-                android:id="@+id/ieqScoreTextView2"
+                android:id="@+id/pageCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IEQ Score: 0.0"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp"
-                android:layout_gravity="center_horizontal"/>
+                android:text="5 of 5"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Navigation Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_gravity="center_horizontal">
+
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <!-- Navigation Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp"
-        android:layout_gravity="center_horizontal">
-
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="16dp">
 
-        <!-- Progress Bar wrapped in LinearLayout with adjusted margins -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:layout_weight="0.9"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progress="100"
-            android:max="100" />
 
-    </LinearLayout>
-    <!-- Page Counter at the bottom -->
-    <TextView
-        android:id="@+id/pageCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:text="Page 5 of 5"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:layout_gravity="center_horizontal"/>
-</LinearLayout>
