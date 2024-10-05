@@ -112,7 +112,10 @@
                     android:layout_height="wrap_content"
                     android:text="IEQ: Acoustic Comfort"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
