@@ -19,7 +19,9 @@
             android:text="Welcome to the Indoor Environmental Quality (IEQ) Survey App."
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
 
         <ImageView
             android:id="@+id/logoImageView"
