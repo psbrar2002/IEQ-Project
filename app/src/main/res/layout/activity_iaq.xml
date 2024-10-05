@@ -112,7 +112,9 @@
                     android:layout_height="wrap_content"
                     android:text="IEQ Indoor Air Quality (IAQ) - PM 2.5 Readings"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
