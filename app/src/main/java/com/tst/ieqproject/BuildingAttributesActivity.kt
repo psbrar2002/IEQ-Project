@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.SpannableString
+import android.text.format.DateFormat
 import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
@@ -24,6 +25,9 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class BuildingAttributesActivity : AppCompatActivity() {
 
@@ -95,6 +99,24 @@ class BuildingAttributesActivity : AppCompatActivity() {
         timeOfDayEditText = findViewById(R.id.timeOfDayEditText)
         seasonSpinner = findViewById(R.id.seasonSpinner)
         ieqScoreTextView2 = findViewById(R.id.ieqScoreTextView2)
+        val dateEditText: EditText = findViewById(R.id.dateEditText)
+        val timeOfDayEditText: EditText = findViewById(R.id.timeOfDayEditText)
+
+        // Get current date and time
+        val calendar = Calendar.getInstance()
+
+        // Format the date as mm/dd/yyyy
+        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        val currentDate = dateFormat.format(calendar.time)
+
+
+        dateEditText.setText(currentDate)
+
+        // Format the time as hh:mm AM/PM
+        val timeFormat = DateFormat.getTimeFormat(this)
+        val currentTime = timeFormat.format(calendar.time)
+
+        timeOfDayEditText.setText(currentTime)
 
         // Setup Spinner Listeners
         buildingTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -256,8 +278,7 @@ class BuildingAttributesActivity : AppCompatActivity() {
         squareFootageSpinner.setSelection(getSpinnerIndex(R.id.squareFootageSpinner, sharedPreferences.getString("squareFootage2", "")!!))
         gpsLocationEditText.setText(sharedPreferences.getString("gpsLocation2", ""))
         ageOfBuildingEditText.setText(sharedPreferences.getString("ageOfBuilding2", ""))
-        dateEditText.setText(sharedPreferences.getString("date2", ""))
-        timeOfDayEditText.setText(sharedPreferences.getString("timeOfDay2", ""))
+
         seasonSpinner.setSelection(getSpinnerIndex(R.id.seasonSpinner, sharedPreferences.getString("season2", "")!!))
         findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
         updateIEQScore2()
