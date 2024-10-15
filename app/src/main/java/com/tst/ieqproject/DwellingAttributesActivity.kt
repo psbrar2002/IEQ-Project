@@ -34,7 +34,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.osmdroid.config.Configuration
 import org.osmdroid.views.MapView
-
+import android.text.format.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DwellingAttributesActivity : AppCompatActivity() {
 
@@ -102,7 +105,26 @@ class DwellingAttributesActivity : AppCompatActivity() {
         streetIntersectionEditText = findViewById(R.id.streetIntersectionEditText)
 
         ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
+        // Autopopulate the current date and time of day
+        val dateEditText: EditText = findViewById(R.id.dateEditText)
+        val timeOfDayEditText: EditText = findViewById(R.id.timeOfDayEditText)
+        Log.d("DwellingAttributesActivity", "EditTexts initialized: dateEditText=$dateEditText, timeOfDayEditText=$timeOfDayEditText")
+        // Get current date and time
+        val calendar = Calendar.getInstance()
 
+        // Format the date as mm/dd/yyyy
+        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+        val currentDate = dateFormat.format(calendar.time)
+        Log.d("DwellingAttributesActivity", "Current date: $currentDate")
+
+        dateEditText.setText(currentDate)
+        Log.d("DwellingAttributesActivity", "Date EditText value: ${dateEditText.text}")
+        // Format the time as hh:mm AM/PM
+        val timeFormat = DateFormat.getTimeFormat(this)
+        val currentTime = timeFormat.format(calendar.time)
+        Log.d("DwellingAttributesActivity", "Current time: $currentTime")
+        timeOfDayEditText.setText(currentTime)
+        Log.d("DwellingAttributesActivity", "Time of Day EditText value: ${timeOfDayEditText.text}")
         // Restore saved data
         restoreData()
 
@@ -322,9 +344,7 @@ class DwellingAttributesActivity : AppCompatActivity() {
         findViewById<Spinner>(R.id.oaklandHousingSpinner).setSelection(if (sharedPreferences.getString("oaklandHousing", "") == "Yes") 1 else 0)
         findViewById<Spinner>(R.id.numberOfPeopleSpinner).setSelection(getSpinnerIndex(R.id.numberOfPeopleSpinner, sharedPreferences.getString("numPeople", "")!!))
         findViewById<Spinner>(R.id.squareFootageSpinner).setSelection(getSpinnerIndex(R.id.squareFootageSpinner, sharedPreferences.getString("squareFootage", "")!!))
-        findViewById<EditText>(R.id.dateEditText).setText(sharedPreferences.getString("date", ""))
         streetIntersectionEditText.setText(sharedPreferences.getString("streetIntersection", ""))
-        findViewById<EditText>(R.id.timeOfDayEditText).setText(sharedPreferences.getString("timeOfDay", "")) // Restore Time of Day
         findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
         findViewById<EditText>(R.id.buildingAgeEditText).setText(sharedPreferences.getString("buildingAge", ""))
         updateIEQScore()

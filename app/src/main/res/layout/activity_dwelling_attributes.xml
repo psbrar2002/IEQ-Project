@@ -149,9 +149,9 @@
                         android:id="@+id/dateEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/date_prompt"
+                        android:hint="Enter date (mm/dd/yyyy)"
+                        android:textColor="@android:color/black"
                         android:inputType="date" />
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -163,8 +163,9 @@
                         android:id="@+id/timeOfDayEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/time_of_day_prompt"
-                        android:inputType="time" />
+                        android:hint="Enter Time of Day (AM/PM)"
+                        android:textColor="@android:color/black"
+                        android:inputType="text" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <!-- Nearby Street Intersection Section -->
