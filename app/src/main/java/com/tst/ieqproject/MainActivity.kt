@@ -3,6 +3,7 @@ package com.tst.ieqproject
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Button
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.database.*
 import com.tst.ieqproject.Secrets.Companion.PASSWORD
@@ -28,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//        window.statusBarColor = ContextCompat.getColor(this, R.color.your_light_color) // Use your desired light background color
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
 

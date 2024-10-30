@@ -166,6 +166,19 @@
                         android:hint="Enter Time of Day (AM/PM)"
                         android:textColor="@android:color/black"
                         android:inputType="text" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Program/Iteration"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/programEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter your Program"
+                        android:textColor="@android:color/black"
+                        android:inputType="text" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <!-- Nearby Street Intersection Section -->

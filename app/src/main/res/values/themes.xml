@@ -6,7 +6,7 @@
     </style>
 
 
-    <style name="Theme.IEQProject" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.IEQProject" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color (Greenish) -->
         <item name="colorPrimary">#4CAF50</item>
         <item name="colorPrimaryVariant">#388E3C</item>
@@ -17,9 +17,11 @@
         <item name="colorSecondaryVariant">#689F38</item>
         <item name="colorOnSecondary">#FFFFFF</item>
 
+
+
         <!-- Background color -->
         <item name="android:colorBackground">#F1F8E9</item>
-
+        <item name="android:statusBarColor">#F1F8E9</item>
         <!-- Text color -->
         <item name="android:textColor">#212121</item>
 
@@ -34,5 +36,6 @@
 
         <!-- Error color -->
         <item name="colorError">#D32F2F</item>
+        <item name="android:forceDarkAllowed">false</item>
     </style>
 </resources>
