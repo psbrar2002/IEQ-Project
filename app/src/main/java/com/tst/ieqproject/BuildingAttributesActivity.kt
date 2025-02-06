@@ -247,6 +247,8 @@ class BuildingAttributesActivity : AppCompatActivity() {
         editor.putString("timeOfDay2", timeOfDayEditText.text.toString())
         editor.putString("season2", seasonSpinner.selectedItem.toString())
         editor.putString("city", findViewById<EditText>(R.id.cityEditText).text.toString()) // New addition for City
+        editor.putString("program",findViewById<EditText>(R.id.programEditText).text.toString()) // New addition for Program
+        editor.putString("nameofroom",findViewById<EditText>(R.id.nameOfRoomEditText).text.toString())
         editor.apply()
     }
 
@@ -281,6 +283,8 @@ class BuildingAttributesActivity : AppCompatActivity() {
 
         seasonSpinner.setSelection(getSpinnerIndex(R.id.seasonSpinner, sharedPreferences.getString("season2", "")!!))
         findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
+        findViewById<EditText>(R.id.programEditText).setText(sharedPreferences.getString("program", ""))
+        findViewById<EditText>(R.id.nameOfRoomEditText).setText(sharedPreferences.getString("nameofroom", ""))
         updateIEQScore2()
     }
 

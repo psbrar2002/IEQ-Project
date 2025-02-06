@@ -179,8 +179,8 @@ class MainActivity : AppCompatActivity() {
     private fun getHeaders(isPublic: Boolean): Array<String> {
         return if (isPublic) {
             arrayOf(
-                "ID", "IEQ Score", "Building Type", "Type of Room", "Square Footage", "GPS Location",
-                "Age of Building", "Date", "Time of Day", "City", "Season", "HVAC Score", "Air Conditioning",
+                "ID", "IEQ Score", "Building Type", "Type of Room", "Name of Room","Square Footage", "GPS Location",
+                "Age of Building", "Date", "Time of Day", "Program","City","Season", "HVAC Score", "Air Conditioning",
                 "Type of Air Conditioning", "Heating Type", "Additional Appliances", "Portable Air Filter",
                 "IAQ Score", "Kitchen Presence", "Kitchen Stove Type", "Kitchen Stove Fan", "Bathroom Presence",
                 "Bathroom Ventilation Type", "Mold Presence", "PM2.5 Value", "Indoor Humidity", "Outdoor PM2.5",
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             arrayOf(
                 "ID", "IEQ Score", "Home Type", "Section 8", "Oakland Housing", "Number of People",
-                "Square Footage", "Date", "Time of Day", "City","Street Intersection", "Building Age", "HVAC Score", "Has Air Conditioning",
+                "Square Footage", "Date", "Time of Day","Program", "City","Street Intersection", "Building Age", "HVAC Score", "Has Air Conditioning",
                 "Air Conditioning Works", "Type of Air Conditioning", "Heating Type", "Additional Appliances",
                 "Has Portable Air Filter", "IAQ Score", "Kitchen Stove Type", "Kitchen Stove Fan",
                 "Bathroom Ventilation", "Mold Present", "Living Room Before Cooking", "Living Room After Cooking",
@@ -210,11 +210,13 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("ieqScore").value.toString(),
                 snapshot.child("buildingAttributes/buildingType").value.toString(),
                 snapshot.child("buildingAttributes/typeOfRoom").value.toString(),
+                snapshot.child("buildingAttributes/nameofroom").value.toString(),
                 snapshot.child("buildingAttributes/squareFootage").value.toString(),
                 snapshot.child("buildingAttributes/gpsLocation").value.toString(),
                 snapshot.child("buildingAttributes/ageOfBuilding").value.toString(),
                 snapshot.child("buildingAttributes/date").value.toString(),
                 snapshot.child("buildingAttributes/timeOfDay").value.toString(),
+                snapshot.child("buildingAttributes/program").value.toString(),
                 snapshot.child("buildingAttributes/city").value.toString(), // Added City
                 snapshot.child("buildingAttributes/season").value.toString(),
                 snapshot.child("hvacAttributes/hvacScore").value.toString(),
@@ -254,6 +256,7 @@ class MainActivity : AppCompatActivity() {
                 snapshot.child("dwellingAttributes/squareFootage").value.toString(),
                 snapshot.child("dwellingAttributes/date").value.toString(),
                 snapshot.child("dwellingAttributes/timeOfDay").value.toString(), // Added Time of Day
+                snapshot.child("dwellingAttributes/program").value.toString(),
                 snapshot.child("dwellingAttributes/city").value.toString(), // Added City
                 snapshot.child("dwellingAttributes/streetIntersection").value.toString(),
                 snapshot.child("dwellingAttributes/buildingAge").value.toString(),

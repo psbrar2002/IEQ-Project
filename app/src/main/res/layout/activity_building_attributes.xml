@@ -166,6 +166,18 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/time_of_day_prompt"
                         android:inputType="time" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Program/Iteration"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/programEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter your Program"
+                        android:textColor="@android:color/black"
+                        android:inputType="text" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -278,6 +290,10 @@
                         android:layout_height="wrap_content"
                         android:hint="Please specify"
                         android:visibility="gone" />
+
+
+
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -316,7 +332,34 @@
                         android:visibility="gone" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <!-- Name of Room -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name of Room"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/nameOfRoomEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Describe the Room"
+                        android:inputType="text" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
             <!-- Square Footage Section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

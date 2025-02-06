@@ -334,6 +334,7 @@ class DwellingAttributesActivity : AppCompatActivity() {
         editor.putString("streetIntersection", streetIntersectionEditText.text.toString())
         editor.putString("timeOfDay", findViewById<EditText>(R.id.timeOfDayEditText).text.toString()) // New addition for Time of Day
         editor.putString("city", findViewById<EditText>(R.id.cityEditText).text.toString()) // New addition for City
+        editor.putString("program",findViewById<EditText>(R.id.programEditText).text.toString()) // New addition for Program
         editor.putString("buildingAge", findViewById<EditText>(R.id.buildingAgeEditText).text.toString())
         editor.apply()
     }
@@ -347,6 +348,7 @@ class DwellingAttributesActivity : AppCompatActivity() {
         streetIntersectionEditText.setText(sharedPreferences.getString("streetIntersection", ""))
         findViewById<EditText>(R.id.cityEditText).setText(sharedPreferences.getString("city", "")) // Restore City
         findViewById<EditText>(R.id.buildingAgeEditText).setText(sharedPreferences.getString("buildingAge", ""))
+        findViewById<EditText>(R.id.programEditText).setText(sharedPreferences.getString("program", ""))
         updateIEQScore()
     }
 

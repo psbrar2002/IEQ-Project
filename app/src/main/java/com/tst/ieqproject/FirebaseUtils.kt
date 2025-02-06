@@ -86,6 +86,8 @@ object FirebaseUtils {
                             ?: "N/A"),
                         "typeOfRoom" to (sharedPreferences.getString("typeOfRoom2", "N/A")
                             ?: "N/A"),
+                        "nameofroom" to (sharedPreferences.getString("nameofroom", "N/A")
+                            ?: "N/A"),
                         "squareFootage" to (sharedPreferences.getString("squareFootage2", "N/A")
                             ?: "N/A"),
                         "gpsLocation" to (sharedPreferences.getString("gpsLocation2", "N/A")
@@ -94,6 +96,7 @@ object FirebaseUtils {
                             ?: "N/A"),
                         "date" to (sharedPreferences.getString("date2", "N/A") ?: "N/A"),
                         "timeOfDay" to (sharedPreferences.getString("timeOfDay2", "N/A") ?: "N/A"),
+                        "program" to (sharedPreferences.getString("program","N/A") ?: "N/A"),
                         "city" to (sharedPreferences.getString("city", "N/A") ?: "N/A"),
                         "season" to (sharedPreferences.getString("season2", "N/A") ?: "N/A")
                     ),
@@ -185,6 +188,7 @@ object FirebaseUtils {
                             ?: "N/A"),
                         "date" to (sharedPreferences.getString("date", "N/A") ?: "N/A"),
                         "timeOfDay" to (sharedPreferences.getString("timeOfDay", "N/A") ?: "N/A"), // Add Time of Day
+                        "program" to (sharedPreferences.getString("program","N/A") ?: "N/A"),
                         "city" to (sharedPreferences.getString("city", "N/A") ?: "N/A"), // Add City
                         "streetIntersection" to (sharedPreferences.getString(
                             "streetIntersection",
