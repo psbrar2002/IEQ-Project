@@ -166,7 +166,8 @@ class AcousticComfortActivity2 : AppCompatActivity() {
 
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Failed to submit survey data. Please try again.", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, SubmissionActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -178,7 +179,7 @@ class AcousticComfortActivity2 : AppCompatActivity() {
 
         builder.setPositiveButton("Yes") { dialog, which ->
             // Clear all data before exiting
-            clearAllData()
+          clearAllData()
 
             // Navigate back to the main screen
             val intent = Intent(this, MainActivity::class.java)
@@ -195,12 +196,16 @@ class AcousticComfortActivity2 : AppCompatActivity() {
     }
 
     private fun clearAllData() {
+        // Remove all keys except for the FAILED_SUBMISSIONS key.
         val editor = sharedPreferences.edit()
-        editor.clear()
+        for (key in sharedPreferences.all.keys) {
+            if (key != "FAILED_SUBMISSIONS") {
+                editor.remove(key)
+            }
+        }
         editor.apply()
-        restoreData()
+        restoreData() // If restoreData() is needed to reinitialize any UI data.
     }
-
     private fun showSubmitConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Submit Survey")

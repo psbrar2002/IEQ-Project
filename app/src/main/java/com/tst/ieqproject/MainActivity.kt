@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 //        window.statusBarColor = ContextCompat.getColor(this, R.color.your_light_color) // Use your desired light background color
         // Initialize Firebase Database
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         val startSurveyButton: Button = findViewById(R.id.startSurveyButton)
         val exportButton: Button = findViewById(R.id.exportButton)
         val startSurveyButton2: Button = findViewById(R.id.startSurveyButton2)
+// In MainActivity onCreate():
+        val resubmitButton: Button = findViewById(R.id.resubmitButton)
+        resubmitButton.setOnClickListener {
+            startActivity(Intent(this, ResubmitActivity::class.java))
+        }
 
 
         // Set up the start survey button click listener

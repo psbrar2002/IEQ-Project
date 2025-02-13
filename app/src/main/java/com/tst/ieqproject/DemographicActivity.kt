@@ -88,7 +88,7 @@ class DemographicActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Yes") { dialog, _ ->
             // Clear all data before exiting
-            clearAllData()
+          clearAllData()
 
             // Navigate back to the main screen
             val intent = Intent(this, MainActivity::class.java)
@@ -135,7 +135,9 @@ class DemographicActivity : AppCompatActivity() {
                 intent.putExtra("surveyIdentifier", identifier)  // Pass the unique identifier
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Failed to submit survey data. Please try again.", Toast.LENGTH_LONG).show()
+//                clearAllData()
+                val intent = Intent(this, SubmissionActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -173,10 +175,15 @@ class DemographicActivity : AppCompatActivity() {
     }
 
     private fun clearAllData() {
+        // Remove all keys except for the FAILED_SUBMISSIONS key.
         val editor = sharedPreferences.edit()
-        editor.clear()
+        for (key in sharedPreferences.all.keys) {
+            if (key != "FAILED_SUBMISSIONS") {
+                editor.remove(key)
+            }
+        }
         editor.apply()
-        restoreData()
+        restoreData() // If restoreData() is needed to reinitialize any UI data.
     }
 
     private fun updateIEQScore() {

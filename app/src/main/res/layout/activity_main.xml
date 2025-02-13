@@ -90,6 +90,17 @@
                 android:textColor="@android:color/white"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_gravity="center"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/resubmitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offline Submissions"
+                android:padding="16dp"
+                app:cornerRadius="8dp"
+                app:iconPadding="8dp"
+                android:textColor="@android:color/white"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/dataSizeTextView"

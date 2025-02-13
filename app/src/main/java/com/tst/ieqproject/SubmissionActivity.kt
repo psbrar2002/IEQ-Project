@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.tst.ieqproject.utils.FirebaseUtils
 import com.tst.ieqproject.utils.ScoreUtils
 import com.tst.ieqproject.utils.ScoreUtils2
 import android.content.SharedPreferences
@@ -30,17 +31,15 @@ class SubmissionActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         isPublicSurvey = intent.getBooleanExtra("isPublicSurvey", false)
         ieqScoreTextView = findViewById(R.id.ieqScoreTextView)
-
-        // Retrieve surveyId directly from SharedPreferences
-        surveyId = sharedPreferences.getString("surveyId", generateDefaultSurveyId()) ?: generateDefaultSurveyId()
-
-        // Find the TextView for displaying the survey identifier
         surveyIdentifierTextView = findViewById(R.id.surveyIdentifierTextView)
 
-        // Display the survey identifier
-        surveyIdentifierTextView.text = "Survey ID: $surveyId"
+        // Instead of defaulting to "0000", generate (or retrieve) the proper survey ID.
+        FirebaseUtils.generateAndSaveSurveyId(this, isPublicSurvey) { id ->
+            surveyId = id
+            surveyIdentifierTextView.text = "Survey ID: $id"
+        }
 
-        // Set up links and buttons
+        // Set up links and buttons.
         findViewById<TextView>(R.id.buildAirPurifierLink).setOnClickListener {
             openLink("https://www.commonhumanitycollective.org/purifier/buildyourown/")
         }
@@ -57,9 +56,12 @@ class SubmissionActivity : AppCompatActivity() {
             openLink("https://www.oaklandca.gov/services/report-a-property-complaint")
         }
 
+        // Exit button: Clear all data except FAILED_SUBMISSIONS and navigate to MainActivity.
         findViewById<Button>(R.id.exitButton).setOnClickListener {
-            showHomepageConfirmationDialog()
             clearAllData()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 
@@ -70,17 +72,12 @@ class SubmissionActivity : AppCompatActivity() {
 
     private fun updateIEQScore() {
         val sharedPreferences = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
-
-        // Use the appropriate ScoreUtils to update the IEQ score directly in the TextView
         val ieqScore: Float = if (isPublicSurvey) {
             ScoreUtils2.updateIEQScore2(this, sharedPreferences, ieqScoreTextView)
         } else {
             ScoreUtils.updateIEQScore(this, sharedPreferences, ieqScoreTextView)
         }
-
         Log.d("SubmissionActivity", "Calculated IEQ score: $ieqScore")
-
-        // Display the IEQ Score and apply color only to the score part
         val scoreColor = when {
             ieqScore >= 85 -> ContextCompat.getColor(this, R.color.colorA)
             ieqScore >= 75 -> ContextCompat.getColor(this, R.color.colorB)
@@ -90,14 +87,11 @@ class SubmissionActivity : AppCompatActivity() {
             ieqScore >= 35 -> ContextCompat.getColor(this, R.color.colorF)
             else -> ContextCompat.getColor(this, R.color.colorG)
         }
-
         val ieqScoreText = "IEQ Score: "
         val scoreText = "%.2f%%".format(ieqScore)
-
         val spannableString = SpannableString(ieqScoreText + scoreText).apply {
             setSpan(ForegroundColorSpan(scoreColor), ieqScoreText.length, ieqScoreText.length + scoreText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
-
         ieqScoreTextView.text = spannableString
     }
 
@@ -107,36 +101,14 @@ class SubmissionActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun generateDefaultSurveyId(): String {
-        return if (isPublicSurvey) {
-            "PUB-0000"
-        } else {
-            "PRI-0000"
-        }
-    }
-
-    private fun showHomepageConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Return to Homepage?")
-        builder.setMessage("Are you sure you want to go to the Homepage?")
-
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
     private fun clearAllData() {
         val editor = sharedPreferences.edit()
-        editor.clear()
+        // Remove all keys except FAILED_SUBMISSIONS.
+        for (key in sharedPreferences.all.keys) {
+            if (key != "FAILED_SUBMISSIONS") {
+                editor.remove(key)
+            }
+        }
         editor.apply()
     }
 }

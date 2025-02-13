@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <!-- Exit Button positioned at the top left -->
+    <TextView
+        android:id="@+id/capacityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Capacity remaining: "
+        android:textSize="16sp"
+        android:paddingBottom="8dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit All"
+        android:padding="16dp"
+        app:cornerRadius="8dp"
+        app:iconPadding="8dp"
+        android:textColor="@android:color/white"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_gravity="center"/>
+    <ImageButton
+        android:id="@+id/exitButtonWithIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/exit"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@android:color/holo_red_dark" />
+    <TextView
+        android:id="@+id/resubmitTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed Submissions Queue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"/>
+
+    <ListView
+        android:id="@+id/failedSubmissionsListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="1dp"/>
+</LinearLayout>

@@ -215,12 +215,17 @@ class BuildingAttributesActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
-    private fun clearAllData() {
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-        restoreData()
+private fun clearAllData() {
+    // Remove all keys except for the FAILED_SUBMISSIONS key.
+    val editor = sharedPreferences.edit()
+    for (key in sharedPreferences.all.keys) {
+        if (key != "FAILED_SUBMISSIONS") {
+            editor.remove(key)
+        }
     }
+    editor.apply()
+    restoreData() // If restoreData() is needed to reinitialize any UI data.
+}
 
     private fun saveDataLocally() {
         val editor = sharedPreferences.edit()

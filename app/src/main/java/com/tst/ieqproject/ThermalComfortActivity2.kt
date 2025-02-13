@@ -171,9 +171,14 @@ class ThermalComfortActivity2 : AppCompatActivity() {
     }
 
     private fun clearAllData() {
+        // Remove all keys except for the FAILED_SUBMISSIONS key.
         val editor = sharedPreferences.edit()
-        editor.clear()
+        for (key in sharedPreferences.all.keys) {
+            if (key != "FAILED_SUBMISSIONS") {
+                editor.remove(key)
+            }
+        }
         editor.apply()
-        restoreData()
+        restoreData() // If restoreData() is needed to reinitialize any UI data.
     }
 }
