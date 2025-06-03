@@ -6,24 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
     <!-- Exit Button positioned at the top left -->
-    <TextView
-        android:id="@+id/capacityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Capacity remaining: "
-        android:textSize="16sp"
-        android:paddingBottom="8dp" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/submitAllButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit All"
-        android:padding="16dp"
-        app:cornerRadius="8dp"
-        app:iconPadding="8dp"
-        android:textColor="@android:color/white"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_gravity="center"/>
     <ImageButton
         android:id="@+id/exitButtonWithIcon"
         android:layout_width="40dp"
@@ -38,14 +20,38 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:backgroundTint="@android:color/holo_red_dark" />
+
     <TextView
         android:id="@+id/resubmitTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Failed Submissions Queue"
+        android:text="Offline Submissions Queue"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:layout_gravity="center"/>
+    <TextView
+        android:id="@+id/capacityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Capacity remaining: "
+        android:textSize="16sp"
+        android:paddingBottom="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submitAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit All"
+        android:padding="4dp"
+        app:cornerRadius="8dp"
+        app:iconPadding="8dp"
+        android:textColor="@android:color/white"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_gravity="center"/>
+
+
 
     <ListView
         android:id="@+id/failedSubmissionsListView"

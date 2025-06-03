@@ -7,7 +7,7 @@ import org.json.JSONObject
 
 object FailedSubmissionsManager {
     private const val PREF_KEY = "FAILED_SUBMISSIONS"
-    private const val MAX_FAILED_SUBMISSIONS = 20
+    private const val MAX_FAILED_SUBMISSIONS = 15
 
     fun addFailedSubmission(context: Context, surveyData: Map<String, Any>) {
         val prefs = context.getSharedPreferences("APP_PREFS", Context.MODE_PRIVATE)

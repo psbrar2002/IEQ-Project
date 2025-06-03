@@ -8,7 +8,7 @@
 
     <style name="Theme.IEQProject" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color (Greenish) -->
-        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimary">#72BF7E</item>
         <item name="colorPrimaryVariant">#388E3C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
 

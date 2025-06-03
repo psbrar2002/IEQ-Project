@@ -1,10 +1,10 @@
-<!-- res/layout/activity_main.xml -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -14,101 +14,228 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:padding="16dp"
-            android:layout_gravity="center">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome to the Indoor Environmental Quality (IEQ) Survey App."
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"/>
 
             <ImageView
                 android:id="@+id/logoImageView"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/logo"
+                android:layout_marginBottom="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:layout_marginBottom="16dp" />
+                android:src="@drawable/ieglogo2" />
+
+            <TextView
+                android:id="@+id/welcomeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                android:layout_marginBottom="0dp"/> <!-- Reduced margin -->
+
+            <TextView
+                android:id="@+id/environmentalQualityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                android:text="Indoor Environmental Quality"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="30dp"/> <!-- Reduced margin -->
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="The purpose of this survey is to evaluate indicators of environmental quality within homes and other buildings to identify ways to improve human health and resiliency in the face of climate extremes. If you have trouble answering questions, please contact your instructor, or you may write a message to ieq.tool@gmail.com."
-                android:layout_marginBottom="16dp" />
-
+                android:layout_marginBottom="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="The purpose of this survey is to evaluate indicators of environmental quality within homes and other buildings to identify ways to improve human health and resiliency in the face of climate extremes." />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thank you for participating to create a database that can help inform important changes to our built environment."
-                android:layout_marginBottom="24dp" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text ="If you have trouble answering questions, please contact your instructor, or you may write a message to ieq.tool@gmail.com."
+                android:layout_marginBottom="24dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="Thank you for participating to create a database that can help inform important changes to our built environment." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="Select Building Type:"
+                android:textStyle="bold"/>
 
-            <!-- Survey Buttons -->
+
+            <!-- Survey Buttons in a Horizontal Layout -->
+            <!-- Survey Buttons in a Horizontal Layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/startSurveyButton"
+                <!-- Private Survey Section -->
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Start Private Building Survey (e.g., homes, apartments, private residences)"
-                    app:cornerRadius="8dp"
-                    app:iconPadding="8dp"
-                    android:layout_marginEnd="8dp" />
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp"> <!-- Added margin between buttons -->
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/startSurveyButton2"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/startSurveyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Private"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="24dp"
+                        android:minHeight="66dp"
+                        app:cornerRadius="8dp"
+                        app:iconPadding="12dp" />
+
+                    <!-- Description Text Below Button -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="e.g., homes, apartments, private residences"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <!-- Public Survey Section -->
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Start Public Building Survey (e.g., schools, libraries, non-residential spaces)"
-                    app:cornerRadius="8dp"
-                    app:iconPadding="8dp"
-                    android:layout_marginStart="8dp" />
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginStart="12dp"> <!-- Added margin between buttons -->
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/startSurveyButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:text="Public"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="24dp"
+                        android:minHeight="66dp"
+                        app:cornerRadius="8dp"
+                        app:iconPadding="12dp" />
+
+                    <!-- Description Text Below Button -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="e.g., schools, libraries, non-residential spaces"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/exportButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EXPORT DATA"
-                android:padding="16dp"
-                app:cornerRadius="8dp"
-                app:iconPadding="8dp"
-                android:textColor="@android:color/white"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_gravity="center"/>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/resubmitButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Offline Submissions"
-                android:padding="16dp"
-                app:cornerRadius="8dp"
-                app:iconPadding="8dp"
-                android:textColor="@android:color/white"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_gravity="center"/>
 
-            <TextView
-                android:id="@+id/dataSizeTextView"
-                android:layout_width="wrap_content"
+
+            <!-- Lower Buttons (Export and Offline Submissions) -->
+            <!-- Lower Buttons (Export and Offline Submissions) -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Data Size: "
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/exportButton"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:paddingVertical="12dp"
+                    android:minHeight="66dp"
+                    android:text="EXPORT DATA"
+                    android:textColor="@android:color/white"
+                    app:cornerRadius="8dp"
+                    app:iconPadding="8dp" />
+
+                <!-- FrameLayout to overlay the badge on the Offline Submissions button -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/resubmitButton"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="12dp"
+                        android:minHeight="66dp"
+                        android:textSize="10.5dp"
+                        android:textStyle="bold"
+                        android:text="Offline Submissions"
+                        android:textColor="@android:color/white"
+                        app:cornerRadius="8dp"
+                        app:iconPadding="8dp" />
+
+                    <!-- Large Badge Notification, positioned correctly -->
+                    <TextView
+                        android:id="@+id/badgeTextView"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end|top"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/badge_background"
+                        android:elevation="10dp"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </LinearLayout>
+
+
+
+            <!-- Data Size TextView -->
+<!--            <TextView-->
+<!--                android:id="@+id/dataSizeTextView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:text="Data Size: "-->
+<!--                android:textStyle="bold" />-->
+
         </LinearLayout>
     </FrameLayout>
 </ScrollView>

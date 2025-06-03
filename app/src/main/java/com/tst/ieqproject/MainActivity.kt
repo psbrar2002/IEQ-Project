@@ -1,24 +1,26 @@
 package com.tst.ieqproject
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.WebSettings
-import android.webkit.WebView
 import android.widget.Button
+import com.tst.ieqproject.Secrets.Companion.PASSWORD
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.database.*
-import com.tst.ieqproject.Secrets.Companion.PASSWORD
+import com.tst.ieqproject.utils.FailedSubmissionsManager
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
-import org.osmdroid.util.GeoPoint
 import java.io.File
 import java.io.FileWriter
 
@@ -26,30 +28,44 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
     private lateinit var dataSizeTextView: TextView
+    private lateinit var badgeTextView: TextView
+    private lateinit var resubmitButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//        window.statusBarColor = ContextCompat.getColor(this, R.color.your_light_color) // Use your desired light background color
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
-
-        // Initialize the TextView for displaying data size
-        dataSizeTextView = findViewById(R.id.dataSizeTextView)
+//        dataSizeTextView = findViewById(R.id.dataSizeTextView)
+        badgeTextView = findViewById(R.id.badgeTextView)
+        resubmitButton = findViewById(R.id.resubmitButton)
 
         val startSurveyButton: Button = findViewById(R.id.startSurveyButton)
         val exportButton: Button = findViewById(R.id.exportButton)
         val startSurveyButton2: Button = findViewById(R.id.startSurveyButton2)
-// In MainActivity onCreate():
-        val resubmitButton: Button = findViewById(R.id.resubmitButton)
+        // First TextView: Color "IEQ" green
+        val welcomeTextView = findViewById<TextView>(R.id.welcomeTextView)
+        val welcomeText = "Welcome to IEQ Survey"
+        val spannableWelcome = SpannableString(welcomeText)
+
+        // Set color for "IEQ" (index 11-14)
+        spannableWelcome.setSpan(
+            ForegroundColorSpan(Color.parseColor("#004225")), // Dark green color
+            11, 14, // Indexes for "IEQ"
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        welcomeTextView.text = spannableWelcome
+
+        // Second TextView: Make all text green
+        val environmentalQualityTextView = findViewById<TextView>(R.id.environmentalQualityTextView)
+        environmentalQualityTextView.setTextColor(Color.parseColor("#004225")) // Green color
         resubmitButton.setOnClickListener {
-            startActivity(Intent(this, ResubmitActivity::class.java))
+            val intent = Intent(this, ResubmitActivity::class.java)
+            startActivityForResult(intent, 1) // Expect result to update badge
         }
 
-
-        // Set up the start survey button click listener
         startSurveyButton.setOnClickListener {
             startActivity(Intent(this, DwellingAttributesActivity::class.java))
         }
@@ -58,69 +74,59 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, BuildingAttributesActivity::class.java))
         }
 
-        // Listen for changes in the data size
         setupDataSizeListener()
-
-        // Set up the export button click listener
         exportButton.setOnClickListener {
             showPasswordDialog()
+        }
+
+        // Update badge count when MainActivity starts
+        updateBadgeCount(FailedSubmissionsManager.getFailedSubmissions(this).size)
+    }
+
+    private fun updateBadgeCount(failedCount: Int) {
+        if (failedCount > 0) {
+            badgeTextView.text = failedCount.toString()
+            badgeTextView.visibility = View.VISIBLE
+        } else {
+            badgeTextView.visibility = View.GONE
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val failedCount = data?.getIntExtra("failedCount", 0) ?: 0
+            updateBadgeCount(failedCount) // Update the badge dynamically
         }
     }
 
     private fun setupDataSizeListener() {
         database.child("surveyData").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Calculate the size of the data
                 var totalSizeBytes = 0L
-
                 dataSnapshot.children.forEach { childSnapshot ->
-                    totalSizeBytes += getSizeOfDataSnapshot(childSnapshot)
+                    totalSizeBytes += childSnapshot.value.toString().toByteArray().size.toLong()
                 }
-
-                // Convert the size to a human-readable format
                 val dataSizeReadable = formatSize(totalSizeBytes)
-                dataSizeTextView.text = "Data Size: $dataSizeReadable"
+//                dataSizeTextView.text = "Data Size: $dataSizeReadable"
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle cancellation
-                dataSizeTextView.text = "Data Size: Error"
+//                dataSizeTextView.text = "Data Size: Error"
             }
         })
     }
 
-    private fun getSizeOfDataSnapshot(dataSnapshot: DataSnapshot): Long {
-        var size = 0L
-
-        // Calculate the size of this snapshot
-        if (dataSnapshot.value is String) {
-            size += (dataSnapshot.value as String).toByteArray().size.toLong()
-        } else if (dataSnapshot.value is Number) {
-            size += 8L // Assuming 8 bytes for a number (Long, Double, etc.)
-        } else if (dataSnapshot.value is Boolean) {
-            size += 1L // Assuming 1 byte for a boolean
-        }
-
-        // Recursively calculate the size of child snapshots
-        dataSnapshot.children.forEach { child ->
-            size += getSizeOfDataSnapshot(child)
-        }
-
-        return size
-    }
-
     private fun formatSize(sizeInBytes: Long): String {
-        val kilobyte = 1024.0
-        val megabyte = kilobyte * 1024
-        val gigabyte = megabyte * 1024
-        val terabyte = gigabyte * 1024
+        val kb = 1024.0
+        val mb = kb * 1024
+        val gb = mb * 1024
 
         return when {
-            sizeInBytes < kilobyte -> "$sizeInBytes Bytes"
-            sizeInBytes < megabyte -> String.format("%.2f KB", sizeInBytes / kilobyte)
-            sizeInBytes < gigabyte -> String.format("%.2f MB", sizeInBytes / megabyte)
-            sizeInBytes < terabyte -> String.format("%.2f GB", sizeInBytes / gigabyte)
-            else -> String.format("%.2f TB", sizeInBytes / terabyte)
+            sizeInBytes < kb -> "$sizeInBytes Bytes"
+            sizeInBytes < mb -> String.format("%.2f KB", sizeInBytes / kb)
+            sizeInBytes < gb -> String.format("%.2f MB", sizeInBytes / mb)
+            else -> String.format("%.2f GB", sizeInBytes / gb)
         }
     }
 
