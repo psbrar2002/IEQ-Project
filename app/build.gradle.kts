@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId = "com.tst.ieqproject"
-        minSdk = 24
+        minSdk = 35
         targetSdk = 35
-        versionCode = 11
-        versionName = "2.0"
+        versionCode = 12
+        versionName = "2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
